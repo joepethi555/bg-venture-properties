@@ -17,6 +17,64 @@ const SERVICES = [
   'Overseas property search',
 ] as const;
 
+const SERVICE_PAGES: Record<string, {
+  eyebrow: string; title: string; em: string; img: string; alt: string;
+  intro: string; offers: { h: string; p: string }[]; note: string;
+}> = {
+  '#/service-leasing': {
+    eyebrow: '01 / LEASING PROPERTY BROKERAGE',
+    title: 'The right space.', em: 'The right tenant.',
+    img: '/p6.jpg', alt: 'Modern residential property exterior in Dubai',
+    intro: 'Whether you are a landlord looking for a quality tenant or a business searching for the right office, we bring both sides of the lease together — quickly and professionally.',
+    offers: [
+      { h: 'Tenant sourcing', p: 'We market your property and connect you with verified prospective tenants looking to rent.' },
+      { h: 'Office & commercial leasing', p: 'Office space matched to your location, team size, budget, and move-in timeframe.' },
+      { h: 'Residential leasing', p: 'Homes matched to lifestyle, commute, and budget — from studios to family residences.' },
+      { h: 'Lease coordination', p: 'Guidance through viewings, negotiations, and the documentation needed to complete the lease.' },
+    ],
+    note: 'Over 200 landlords already trust BG Venture Properties to connect their properties with the right people.',
+  },
+  '#/service-selling': {
+    eyebrow: '02 / BUYING & SELLING BROKERAGE',
+    title: 'Buy with clarity.', em: 'Sell with confidence.',
+    img: '/p9.jpg', alt: 'Two professionals discussing a property investment over documents',
+    intro: 'From your first viewing to the final signature, our brokerage team helps you find the right property — or the right buyer — with a clear view of price, process, and opportunity.',
+    offers: [
+      { h: 'Buyer representation', p: 'A focused shortlist matched to your goals, budget, and investment horizon — in Dubai or from abroad.' },
+      { h: 'Seller representation', p: 'Property positioning, presentation, and enquiry handling to reach serious buyers.' },
+      { h: 'Investment advisory', p: 'Opportunities assessed on price, costs, rental assumptions, and the questions worth asking.' },
+      { h: 'Transaction support', p: 'Coordination of viewings, negotiation, and the stages needed to complete your deal.' },
+    ],
+    note: 'With 5,000 properties supported, we know how to match the right property to the right client.',
+  },
+  '#/service-management': {
+    eyebrow: '03 / REAL ESTATE MANAGEMENT SUPERVISION',
+    title: 'Your property.', em: 'Professionally supervised.',
+    img: '/p5.jpg', alt: 'Residential building facade under management',
+    intro: 'Living abroad or simply short on time? Our management supervision keeps your Dubai property running — with an agreed scope, clear communication, and a team on the ground.',
+    offers: [
+      { h: 'Tenancy supervision', p: 'Tenant communication, renewals, and day-to-day coordination handled for you.' },
+      { h: 'Maintenance coordination', p: 'Issues assessed, quotes gathered, and work approved by you before it proceeds.' },
+      { h: 'Rent & income tracking', p: 'Clear visibility of payments, expenses, and the status of your property.' },
+      { h: 'Owner reporting', p: 'Regular updates agreed with you — so distance never means being out of touch.' },
+    ],
+    note: 'Tell us how involved you want to be. We agree the scope, fees, and approvals before we begin.',
+  },
+};
+
+const SLIDES = [
+  { src: '/p1.jpg', label: 'Residential property' },
+  { src: '/p2.jpg', label: 'Interior living' },
+  { src: '/p3.jpg', label: 'Office spaces' },
+  { src: '/p4.jpg', label: 'Commercial leasing' },
+  { src: '/p5.jpg', label: 'Property management' },
+  { src: '/p6.jpg', label: 'Family homes' },
+  { src: '/p7.jpg', label: 'Client meetings' },
+  { src: '/p8.jpg', label: 'Investment discussions' },
+  { src: '/p9.jpg', label: 'Deal negotiation' },
+  { src: '/p10.jpg', label: 'Apartment living' },
+];
+
 const NAV_ITEMS = [
   { href: '#home', key: 'nav.home', label: 'Home' },
   { href: '#about', key: 'nav.company', label: 'Our company' },
@@ -53,9 +111,70 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('#home');
   const [status, setStatus] = useState('');
+  const [route, setRoute] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   useReveal();
+
+  useEffect(() => {
+    const onHash = () => {
+      const h = window.location.hash;
+      if (h.startsWith('#/service-')) {
+        setRoute(h);
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      } else if (route) setRoute('');
+    };
+    onHash();
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, [route]);
+
+  useEffect(() => {
+    if (route) return;
+    const hero = document.querySelector<HTMLElement>('.hero');
+    const onMove = (e: MouseEvent) => {
+      const nx = e.clientX / innerWidth - 0.5;
+      const ny = e.clientY / innerHeight - 0.5;
+      hero?.style.setProperty('--px', String(nx * 22));
+      hero?.style.setProperty('--py', String(ny * 14));
+    };
+    hero?.addEventListener('mousemove', onMove);
+    return () => hero?.removeEventListener('mousemove', onMove);
+  }, [route]);
+
+  useEffect(() => {
+    if (route) return;
+    const els = [...document.querySelectorAll<HTMLElement>('[data-tilt]')];
+    const cleanups = els.map((el) => {
+      const move = (e: MouseEvent) => {
+        const r = el.getBoundingClientRect();
+        const rx = ((e.clientY - r.top) / r.height - 0.5) * -8;
+        const ry = ((e.clientX - r.left) / r.width - 0.5) * 8;
+        el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      };
+      const leave = () => { el.style.transform = ''; };
+      el.addEventListener('mousemove', move);
+      el.addEventListener('mouseleave', leave);
+      return () => { el.removeEventListener('mousemove', move); el.removeEventListener('mouseleave', leave); };
+    });
+    return () => cleanups.forEach((fn) => fn());
+  }, [route]);
+
+  useEffect(() => {
+    if (route) return;
+    const slider = sliderRef.current;
+    if (!slider) return;
+    const id = window.setInterval(() => {
+      const slide = slider.querySelector<HTMLElement>('.slide');
+      const w = slide ? slide.offsetWidth + 18 : 320;
+      if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) slider.scrollTo({ left: 0, behavior: 'smooth' });
+      else slider.scrollBy({ left: w, behavior: 'smooth' });
+    }, 3500);
+    const pause = () => window.clearInterval(id);
+    slider.addEventListener('pointerenter', pause);
+    return () => { window.clearInterval(id); slider.removeEventListener('pointerenter', pause); };
+  }, [route]);
 
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -146,6 +265,12 @@ export default function App() {
       </header>
 
       <main id="main">
+        {route && SERVICE_PAGES[route] ? (
+          <ServicePage page={SERVICE_PAGES[route]}
+            onBack={() => { window.location.hash = '#home'; setRoute(''); }}
+            onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
+        ) : (
+        <>
         <section id="home" className="hero" aria-labelledby="hero-title">
           <img className="hero-image hero-image-one" src="/dubai.jpg" alt="Dubai skyline with Burj Khalifa and the city's highways" width="2200" height="1467" />
           <img className="hero-image hero-image-two" src="/skyline.jpg" alt="" aria-hidden="true" width="1000" height="1200" loading="lazy" />
@@ -206,8 +331,8 @@ export default function App() {
               <a className="text-link" href="#contact">Get to know your property partner <Icon id="arrow" /></a>
             </div>
             <div className="purpose-grid">
-              <div className="purpose-card"><span className="purpose-label">{isAr ? L('mission.label') : 'OUR MISSION'}</span><p>{isAr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
-              <div className="purpose-card purpose-card-dark"><span className="purpose-label">{isAr ? L('vision.label') : 'OUR VISION'}</span><p>{isAr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — recognised for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
+              <div className="purpose-card" data-tilt><span className="purpose-label">{isAr ? L('mission.label') : 'OUR MISSION'}</span><p>{isAr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
+              <div className="purpose-card purpose-card-dark" data-tilt><span className="purpose-label">{isAr ? L('vision.label') : 'OUR VISION'}</span><p>{isAr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — recognised for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
               <div className="purpose-values"><span><strong>Integrity</strong> in every recommendation</span><i /><span><strong>Clarity</strong> in every detail</span><i /><span><strong>Commitment</strong> beyond the transaction</span></div>
             </div>
           </div>
@@ -223,13 +348,13 @@ export default function App() {
               <p>{isAr ? L('services.sub') : <>Licensed real estate brokerage activities—<br />covering leasing, sales, and management supervision.</>}</p>
             </div>
             <div className="service-grid">
-              <ServiceCard n="01" icon="key" title={isAr ? L('svc1.h') : 'Leasing property brokerage'} link="Find your next space" onPick={() => pickService('Office leasing')}>
+              <ServiceCard n="01" icon="key" title={isAr ? L('svc1.h') : 'Leasing property brokerage'} link="Find your next space" page="#/service-leasing" onPick={() => pickService('Office leasing')}>
                 {isAr ? L('svc1.p') : 'We connect landlords with prospective tenants and help tenants find the right home, office, or commercial space—matching every requirement.'}
               </ServiceCard>
-              <ServiceCard n="02" icon="home" title={isAr ? L('svc2.h') : 'Buying & selling brokerage'} link="Make your next move" onPick={() => pickService('Buying or selling')}>
+              <ServiceCard n="02" icon="home" title={isAr ? L('svc2.h') : 'Buying & selling brokerage'} link="Make your next move" page="#/service-selling" onPick={() => pickService('Buying or selling')}>
                 {isAr ? L('svc2.p') : 'Find the right property or connect yours with potential buyers. Support with your search, property positioning, enquiries, and next steps—including investment opportunities.'}
               </ServiceCard>
-              <ServiceCard n="03" icon="shield" title={isAr ? L('svc3.h') : 'Management supervision'} link="Support for your property" onPick={() => pickService('Property management')}>
+              <ServiceCard n="03" icon="shield" title={isAr ? L('svc3.h') : 'Management supervision'} link="Support for your property" page="#/service-management" onPick={() => pickService('Property management')}>
                 {isAr ? L('svc3.p') : 'Support for the ongoing needs of your Dubai property. Agree the supervision scope, responsibilities, communication, and fees from the outset.'}
               </ServiceCard>
             </div>
@@ -252,17 +377,17 @@ export default function App() {
               <div><p className="eyebrow">THE RIGHT SPACE MAKES A DIFFERENCE</p><h2>For your business.<br /><em>For your next chapter.</em></h2></div>
               <p>A new workspace. A place to call home.<br />A property with investment potential.</p>
             </div>
-            <div className="space-grid">
-              <a className="space-card space-office" href="#contact" onClick={() => pickService('Office leasing')}>
-                <img src="/office.jpg" alt="Illustrative spacious modern office with desks and lounge seating" width="1200" height="800" loading="lazy" />
-                <div className="space-content"><span className="space-tag">COMMERCIAL PROPERTY</span><h3>Your ambition.<br />A better address.</h3><p>Office spaces that work for your business.</p><span className="space-action">Find office space <Icon id="arrow" /></span></div>
-                <span className="image-index">01 / BUSINESS</span>
-              </a>
-              <a className="space-card space-home" href="#contact" onClick={() => pickService('Buying or selling')}>
-                <img src="/residence.jpg" alt="Illustrative contemporary residential interior with natural light" width="1000" height="1000" loading="lazy" />
-                <div className="space-content"><span className="space-tag">RESIDENTIAL PROPERTY</span><h3>A place to belong.<br />An opportunity to own.</h3><p>Homes and investments around your needs.</p><span className="space-action">Find a property <Icon id="arrow" /></span></div>
-                <span className="image-index">02 / LIVING</span>
-              </a>
+            <div className="slider-wrap">
+              <div className="slider" ref={sliderRef}>
+                {SLIDES.map((s, i) => (
+                  <figure className="slide" key={s.src}>
+                    <img src={s.src} alt={s.label} width="900" height="600" loading="lazy" />
+                    <figcaption><span>{String(i + 1).padStart(2, '0')}</span> {s.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+              <button className="slider-btn prev" type="button" aria-label="Previous photo" onClick={() => sliderRef.current?.scrollBy({ left: -340, behavior: 'smooth' })}>←</button>
+              <button className="slider-btn next" type="button" aria-label="Next photo" onClick={() => sliderRef.current?.scrollBy({ left: 340, behavior: 'smooth' })}>→</button>
             </div>
             <p className="image-disclaimer">Illustrative photography. Contact our team for current property availability and details.</p>
           </div>
@@ -372,6 +497,8 @@ export default function App() {
             </form>
           </div>
         </section>
+        </>
+        )}
       </main>
 
       <footer>
@@ -399,14 +526,54 @@ export default function App() {
   );
 }
 
-function ServiceCard({ n, icon, title, link, onPick, children }: { n: string; icon: IconId; title: string; link: string; onPick: () => void; children: React.ReactNode }) {
+function ServiceCard({ n, icon, title, link, page, onPick, children }: { n: string; icon: IconId; title: string; link: string; page: string; onPick: () => void; children: React.ReactNode }) {
   return (
-    <article className="service-card">
+    <article className="service-card" data-tilt>
       <div className="service-top"><span className="icon-box"><Icon id={icon} /></span><span>{n}</span></div>
       <h3>{title}</h3>
       <p>{children}</p>
-      <a className="text-link" href="#contact" onClick={onPick}>{link} <Icon id="arrow" /></a>
+      <div className="card-actions">
+        <a className="button button-small card-cta" href={page}>Explore this service <Icon id="arrow" /></a>
+        <a className="text-link" href="#contact" onClick={onPick}>{link} <Icon id="arrow" /></a>
+      </div>
     </article>
+  );
+}
+
+function ServicePage({ page, onBack, onEnquire }: { page: typeof SERVICE_PAGES[string]; onBack: () => void; onEnquire: () => void }) {
+  return (
+    <section className="service-page">
+      <div className="service-page-hero">
+        <img src={page.img} alt={page.alt} />
+        <div className="service-page-shade" />
+        <div className="container service-page-hero-content">
+          <p className="eyebrow">{page.eyebrow}</p>
+          <h1>{page.title}<br /><em>{page.em}</em></h1>
+          <p className="service-page-intro">{page.intro}</p>
+          <div className="service-page-actions">
+            <a className="button" href="#contact" onClick={onEnquire}>Enquire about this service <Icon id="arrow" /></a>
+            <button className="button button-outline" type="button" onClick={onBack}>← Back to home</button>
+          </div>
+        </div>
+      </div>
+      <div className="container service-page-body">
+        <div className="section-heading split"><div><p className="eyebrow">WHAT WE OFFER</p><h2>Built around<br /><em>your goals.</em></h2></div></div>
+        <div className="offer-grid">
+          {page.offers.map((o, i) => (
+            <article className="offer-card" key={o.h}>
+              <span className="offer-num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{o.h}</h3><p>{o.p}</p>
+            </article>
+          ))}
+        </div>
+        <div className="service-page-note"><Icon id="check" /><p>{page.note}</p></div>
+        <div className="service-page-cta">
+          <h2>Ready to talk it through?</h2>
+          <p>Tell us what you need — we’ll show you the right next step.</p>
+          <a className="button" href="#contact" onClick={onEnquire}>Speak to our team <Icon id="arrow" /></a>
+        </div>
+      </div>
+    </section>
   );
 }
 
