@@ -62,6 +62,21 @@ const SERVICE_PAGES: Record<string, {
   },
 };
 
+const DEVELOPERS = [
+  { name: 'EMAAR', accent: '#1a1a2e' },
+  { name: 'DAMAC', accent: '#8b6914' },
+  { name: 'NAKHEEL', accent: '#0e6e6e' },
+  { name: 'MERAAS', accent: '#c0392b' },
+  { name: 'SOBHA', accent: '#2471a3' },
+  { name: 'ALDAR', accent: '#7d3c98' },
+  { name: 'OMNIYAT', accent: '#1b4f72' },
+  { name: 'BINGHATTI', accent: '#b9770e' },
+  { name: 'AZIZI', accent: '#117864' },
+  { name: 'ELLINGTON', accent: '#5d6d7e' },
+  { name: 'DANUBE', accent: '#21618c' },
+  { name: 'ARADA', accent: '#935116' },
+];
+
 const SLIDES = [
   { src: '/p1.jpg', label: 'Residential property' },
   { src: '/p2.jpg', label: 'Interior living' },
@@ -311,6 +326,24 @@ export default function App() {
           <a href="#contact" onClick={() => pickService('Property management')}>
             <Icon id="key" /><span dangerouslySetInnerHTML={{ __html: isAr ? L('quick.landlord') : 'I’m a landlord <strong>looking for support</strong>' }} /><Icon id="up" />
           </a>
+        </section>
+
+        <section className="dev-marquee-section" aria-label="UAE real estate developers we work with">
+          <p className="dev-marquee-label"><span>PARTNERED WITH THE UAE’S LEADING DEVELOPERS</span></p>
+          <div className="dev-marquee">
+            <div className="dev-track">
+              {[0, 1].map((copy) => (
+                <div className="dev-group" key={copy} aria-hidden={copy === 1}>
+                  {DEVELOPERS.map((d) => (
+                    <span className="dev-card" key={`${copy}-${d.name}`}>
+                      <i className="dev-mark" style={{ background: d.accent }} />
+                      <span className="dev-name">{d.name}</span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section id="about" className="section about-section">
