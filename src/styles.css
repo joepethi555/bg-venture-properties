@@ -176,8 +176,8 @@ h1 em { color: var(--gold); }
 .stat { padding: 10px 30px; border-right: 1px solid var(--line); }
 .stat:first-child { padding-left: 0; }
 .stat:last-child { border-right: none; }
-.stat > span { font-size: 8px; color: #75716a; letter-spacing: .7px; font-weight: 550; }
-.stat > strong { display: block; font-family: var(--display); font-size: clamp(38px, 3.8vw, 56px); letter-spacing: -1px; font-weight: 500; line-height: 1.2; margin-block: 15px; }
+.stat > span { font-size: 11px; color: var(--gold-dark); letter-spacing: 1.6px; font-weight: 700; }
+.stat > strong { display: block; font-family: var(--display); font-size: clamp(28px, 2.6vw, 36px); letter-spacing: -.5px; font-weight: 500; line-height: 1.2; margin-block: 12px; }
 .stat strong span { color: #b58a35; }
 .stat h3 { font-size: 13px; margin-bottom: 9px; }
 .stat p { color: var(--muted); font-size: 11px; margin: 0; max-width: 210px; }
