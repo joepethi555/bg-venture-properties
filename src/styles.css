@@ -48,13 +48,13 @@ p { margin-bottom: 20px; }
 .skip-link { position: fixed; z-index: 100; top: -100px; left: 15px; background: #fff; color: #111; padding: 12px; }
 .skip-link:focus { top: 15px; }
 :focus-visible { outline: 3px solid #bd8b28; outline-offset: 5px; }
-.topbar { display: flex; align-items: center; background: var(--dark); color: #d2d2d2; font-size: 10px; min-height: 36px; }
+.topbar { display: flex; align-items: center; background: var(--dark); color: #e8e6e1; font-size: 11px; font-weight: 700; letter-spacing: .4px; min-height: 38px; }
 .ticker-viewport { flex: 1; min-width: 0; overflow: hidden; }
 .ticker-track { display: flex; width: 100%; }
 .ticker-track.is-ready { animation: none; }
-.ticker-group { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; width: 100%; gap: 20px; padding: 9px 48px; }
+.ticker-group { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 100%; gap: 45px; padding: 8px 30px; }
 .ticker-group[aria-hidden="true"] { display: none; }
-.ticker-group > span, .ticker-group > a { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.ticker-group > span, .ticker-group > a { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-weight: 700; }
 .topbar .icon { width: 13px; height: 13px; color: var(--gold); }
 .topbar a:hover { color: var(--gold); }
 .topbar:hover .ticker-track, .topbar:focus-within .ticker-track { animation-play-state: paused; }

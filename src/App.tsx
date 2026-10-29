@@ -251,7 +251,7 @@ export default function App() {
               <div className="ticker-group" key={copy} aria-hidden={copy === 1}>
                 <span><Icon id="pin" /> Iris Bay Tower, Dubai, UAE</span>
                 <a href={`mailto:${EMAIL}`} tabIndex={copy === 1 ? -1 : undefined}><Icon id="mail" /> {EMAIL}</a>
-                <a href={`tel:${LANDLINE_TEL}`} tabIndex={copy === 1 ? -1 : undefined}><Icon id="phone" /> Landline: {LANDLINE}</a>
+                <a href={`tel:${LANDLINE_TEL}`} tabIndex={copy === 1 ? -1 : undefined}><Icon id="phone" /> {LANDLINE}</a>
               </div>
             ))}
           </div>
