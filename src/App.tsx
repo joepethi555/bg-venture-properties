@@ -237,7 +237,8 @@ export default function App() {
   };
 
   const L = (key: string) => t(key, lang);
-  const isAr = lang === 'ar';
+  const tr = lang !== 'en';
+  const cycleLang = () => setLang(lang === 'en' ? 'ar' : lang === 'ar' ? 'zh' : 'en');
 
   return (
     <>
@@ -270,14 +271,14 @@ export default function App() {
               <a key={href} className={`nav-link${activeSection === href ? ' active' : ''}`} href={href}
                 aria-current={activeSection === href ? 'location' : undefined}
                 onClick={() => setMenuOpen(false)}>
-                {isAr ? L(key) : label}
+                {tr ? L(key) : label}
               </a>
             ))}
-            <button className="lang-toggle" type="button" aria-pressed={isAr} aria-label="Switch language between English and Arabic" onClick={() => setLang(isAr ? 'en' : 'ar')}>
-              <span>EN</span><i /><span className="lang-other">عربي</span>
+            <button className="lang-toggle" type="button" aria-pressed={tr} aria-label="Switch language: English, Arabic, or Chinese" onClick={cycleLang}>
+              <span className={lang === 'en' ? 'lang-active' : ''}>EN</span><i /><span className={lang === 'ar' ? 'lang-active' : ''}>عربي</span><i /><span className={lang === 'zh' ? 'lang-active' : ''}>中文</span>
             </button>
             <a className="button button-small" href="#contact" onClick={() => setMenuOpen(false)}>
-              {isAr ? L('nav.cta') : 'Speak to an expert'} <Icon id="up" />
+              {tr ? L('nav.cta') : 'Speak to an expert'} <Icon id="up" />
             </a>
           </nav>
         </div>
@@ -295,40 +296,40 @@ export default function App() {
           <img className="hero-image hero-image-two" src="/skyline.jpg" alt="" aria-hidden="true" width="1000" height="1200" loading="lazy" />
           <div className="hero-overlay" />
           <div className="container hero-content">
-            <p className="eyebrow hero-eyebrow"><span /> {isAr ? L('hero.eyebrow') : 'DUBAI REAL ESTATE INVESTMENT EXPERTS'}</p>
+            <p className="eyebrow hero-eyebrow"><span /> {tr ? L('hero.eyebrow') : 'DUBAI REAL ESTATE INVESTMENT EXPERTS'}</p>
             <h1 id="hero-title">
               {isAr ? <>{L('hero.line1')}<br />{L('hero.line2')}<br /><em>{L('hero.line3')}</em></>
                 : <>The right property.<br />The right partner.<br /><em>A world of possibility.</em></>}
             </h1>
             <p className="hero-description">
-              {isAr ? L('hero.desc') : 'A Dubai real estate brokerage built around you. Leasing, buying, selling, and management supervision—wherever you are in the world.'}
+              {tr ? L('hero.desc') : 'A Dubai real estate brokerage built around you. Leasing, buying, selling, and management supervision—wherever you are in the world.'}
             </p>
             <div className="hero-actions">
-              <a className="button" href="#contact">{isAr ? L('hero.cta1') : 'Let’s discuss your goals'} <Icon id="arrow" /></a>
-              <a className="button button-outline" href="#services">{isAr ? L('hero.cta2') : 'Explore our expertise'} <Icon id="up" /></a>
+              <a className="button" href="#contact">{tr ? L('hero.cta1') : 'Let’s discuss your goals'} <Icon id="arrow" /></a>
+              <a className="button button-outline" href="#services">{tr ? L('hero.cta2') : 'Explore our expertise'} <Icon id="up" /></a>
             </div>
             <div className="hero-assurance">
-              <span><Icon id="check" /> {isAr ? L('hero.check1') : 'Local market expertise'}</span>
-              <span><Icon id="check" /> {isAr ? L('hero.check2') : 'International client support'}</span>
+              <span><Icon id="check" /> {tr ? L('hero.check1') : 'Local market expertise'}</span>
+              <span><Icon id="check" /> {tr ? L('hero.check2') : 'International client support'}</span>
             </div>
           </div>
           <div className="hero-side"><span>BASED IN DUBAI</span><i /><span>CONNECTED WORLDWIDE</span></div>
           <div className="hero-bottom container">
-            <span>{isAr ? L('hero.bottomLeft') : 'YOUR AMBITION. OUR LOCAL EXPERTISE.'}</span>
-            <a href="#about">{isAr ? L('hero.bottomRight') : 'Discover BG Venture'} <span aria-hidden="true">↓</span></a>
+            <span>{tr ? L('hero.bottomLeft') : 'YOUR AMBITION. OUR LOCAL EXPERTISE.'}</span>
+            <a href="#about">{tr ? L('hero.bottomRight') : 'Discover BG Venture'} <span aria-hidden="true">↓</span></a>
           </div>
         </section>
 
         <section className="quick-start container" aria-label="Find the right service">
-          <div className="quick-title"><span>{isAr ? L('quick.label') : 'YOUR NEXT MOVE'}</span><h2>{isAr ? L('quick.title') : 'How can we help?'}</h2></div>
+          <div className="quick-title"><span>{tr ? L('quick.label') : 'YOUR NEXT MOVE'}</span><h2>{tr ? L('quick.title') : 'How can we help?'}</h2></div>
           <a href="#contact" onClick={() => pickService('Investment advisory')}>
-            <Icon id="invest" /><span dangerouslySetInnerHTML={{ __html: isAr ? L('quick.invest') : 'I want to <strong>invest in property</strong>' }} /><Icon id="up" />
+            <Icon id="invest" /><span dangerouslySetInnerHTML={{ __html: tr ? L('quick.invest') : 'I want to <strong>invest in property</strong>' }} /><Icon id="up" />
           </a>
           <a href="#spaces">
-            <Icon id="office" /><span dangerouslySetInnerHTML={{ __html: isAr ? L('quick.space') : 'I’m looking for <strong>an office or home</strong>' }} /><Icon id="up" />
+            <Icon id="office" /><span dangerouslySetInnerHTML={{ __html: tr ? L('quick.space') : 'I’m looking for <strong>an office or home</strong>' }} /><Icon id="up" />
           </a>
           <a href="#contact" onClick={() => pickService('Property management')}>
-            <Icon id="key" /><span dangerouslySetInnerHTML={{ __html: isAr ? L('quick.landlord') : 'I’m a landlord <strong>looking for support</strong>' }} /><Icon id="up" />
+            <Icon id="key" /><span dangerouslySetInnerHTML={{ __html: tr ? L('quick.landlord') : 'I’m a landlord <strong>looking for support</strong>' }} /><Icon id="up" />
           </a>
         </section>
 
@@ -355,15 +356,15 @@ export default function App() {
         <section id="about" className="section about-section">
           <div className="container">
             <div className="section-heading centered">
-              <p className="eyebrow">{isAr ? L('about.eyebrow') : 'THE COMPANY BEHIND YOUR NEXT MOVE'}</p>
+              <p className="eyebrow">{tr ? L('about.eyebrow') : 'THE COMPANY BEHIND YOUR NEXT MOVE'}</p>
               <h2>{isAr ? <>{L('about.h1')}<br /><em>{L('about.h2')}</em></> : <>Property expertise.<br /><em>Personal commitment.</em></>}</h2>
-              <p>{isAr ? L('about.sub') : <>From finding your first investment to managing an established portfolio,<br className="desktop-break" /> we connect people, properties, and opportunities across Dubai.</>}</p>
+              <p>{tr ? L('about.sub') : <>From finding your first investment to managing an established portfolio,<br className="desktop-break" /> we connect people, properties, and opportunities across Dubai.</>}</p>
             </div>
             <div className="stats-grid">
-              <div className="stat"><span>01 / OUR RELATIONSHIPS</span><strong>200<span>+</span></strong><h3>{isAr ? L('stat1.h') : 'Landlords supported'}</h3><p>Relationships built around property ownership.</p></div>
-              <div className="stat"><span>02 / OUR PROPERTY EXPERIENCE</span><strong>5,000</strong><h3>{isAr ? L('stat2.h') : 'Properties supported'}</h3><p>Helping connect properties with people.</p></div>
-              <div className="stat"><span>03 / OUR HOME MARKET</span><strong>Dubai<span>.</span></strong><h3>{isAr ? L('stat3.h') : 'Local knowledge'}</h3><p>On-the-ground support in the UAE.</p></div>
-              <div className="stat"><span>04 / OUR PERSPECTIVE</span><strong>Global<span>.</span></strong><h3>{isAr ? L('stat4.h') : 'International clients'}</h3><p>Your location need not limit your search.</p></div>
+              <div className="stat"><span>01 / OUR RELATIONSHIPS</span><strong>200<span>+</span></strong><h3>{tr ? L('stat1.h') : 'Landlords supported'}</h3><p>Relationships built around property ownership.</p></div>
+              <div className="stat"><span>02 / OUR PROPERTY EXPERIENCE</span><strong>5,000</strong><h3>{tr ? L('stat2.h') : 'Properties supported'}</h3><p>Helping connect properties with people.</p></div>
+              <div className="stat"><span>03 / OUR HOME MARKET</span><strong>Dubai<span>.</span></strong><h3>{tr ? L('stat3.h') : 'Local knowledge'}</h3><p>On-the-ground support in the UAE.</p></div>
+              <div className="stat"><span>04 / OUR PERSPECTIVE</span><strong>Global<span>.</span></strong><h3>{tr ? L('stat4.h') : 'International clients'}</h3><p>Your location need not limit your search.</p></div>
             </div>
             <div className="scope-block">
               <p className="eyebrow scope-eyebrow"><i />OUR SCOPE</p>
@@ -371,8 +372,8 @@ export default function App() {
               <a className="text-link" href="#contact">Get to know your property partner <Icon id="arrow" /></a>
             </div>
             <div className="purpose-grid">
-              <div className="purpose-card" data-tilt><span className="purpose-label">{isAr ? L('mission.label') : 'OUR MISSION'}</span><p>{isAr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
-              <div className="purpose-card purpose-card-dark" data-tilt><span className="purpose-label">{isAr ? L('vision.label') : 'OUR VISION'}</span><p>{isAr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — recognised for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
+              <div className="purpose-card" data-tilt><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
+              <div className="purpose-card purpose-card-dark" data-tilt><span className="purpose-label">{tr ? L('vision.label') : 'OUR VISION'}</span><p>{tr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — recognised for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
               <div className="purpose-values"><span><strong>Integrity</strong> in every recommendation</span><i /><span><strong>Clarity</strong> in every detail</span><i /><span><strong>Commitment</strong> beyond the transaction</span></div>
             </div>
           </div>
@@ -382,20 +383,20 @@ export default function App() {
           <div className="container">
             <div className="section-heading split">
               <div>
-                <p className="eyebrow">{isAr ? L('services.eyebrow') : 'WHAT WE DO'}</p>
+                <p className="eyebrow">{tr ? L('services.eyebrow') : 'WHAT WE DO'}</p>
                 <h2>{isAr ? <>{L('services.h1')}<br /><em>{L('services.h2')}</em></> : <>Three core services.<br /><em>One trusted partner.</em></>}</h2>
               </div>
-              <p>{isAr ? L('services.sub') : <>Licensed real estate brokerage activities—<br />covering leasing, sales, and management supervision.</>}</p>
+              <p>{tr ? L('services.sub') : <>Licensed real estate brokerage activities—<br />covering leasing, sales, and management supervision.</>}</p>
             </div>
             <div className="service-grid">
-              <ServiceCard n="01" icon="key" title={isAr ? L('svc1.h') : 'Leasing property brokerage'} link="Find your next space" page="#/service-leasing" onPick={() => pickService('Office leasing')}>
-                {isAr ? L('svc1.p') : 'We connect landlords with prospective tenants and help tenants find the right home, office, or commercial space—matching every requirement.'}
+              <ServiceCard n="01" icon="key" title={tr ? L('svc1.h') : 'Leasing property brokerage'} link="Find your next space" page="#/service-leasing" onPick={() => pickService('Office leasing')}>
+                {tr ? L('svc1.p') : 'We connect landlords with prospective tenants and help tenants find the right home, office, or commercial space—matching every requirement.'}
               </ServiceCard>
-              <ServiceCard n="02" icon="home" title={isAr ? L('svc2.h') : 'Buying & selling brokerage'} link="Make your next move" page="#/service-selling" onPick={() => pickService('Buying or selling')}>
-                {isAr ? L('svc2.p') : 'Find the right property or connect yours with potential buyers. Support with your search, property positioning, enquiries, and next steps—including investment opportunities.'}
+              <ServiceCard n="02" icon="home" title={tr ? L('svc2.h') : 'Buying & selling brokerage'} link="Make your next move" page="#/service-selling" onPick={() => pickService('Buying or selling')}>
+                {tr ? L('svc2.p') : 'Find the right property or connect yours with potential buyers. Support with your search, property positioning, enquiries, and next steps—including investment opportunities.'}
               </ServiceCard>
-              <ServiceCard n="03" icon="shield" title={isAr ? L('svc3.h') : 'Management supervision'} link="Support for your property" page="#/service-management" onPick={() => pickService('Property management')}>
-                {isAr ? L('svc3.p') : 'Support for the ongoing needs of your Dubai property. Agree the supervision scope, responsibilities, communication, and fees from the outset.'}
+              <ServiceCard n="03" icon="shield" title={tr ? L('svc3.h') : 'Management supervision'} link="Support for your property" page="#/service-management" onPick={() => pickService('Property management')}>
+                {tr ? L('svc3.p') : 'Support for the ongoing needs of your Dubai property. Agree the supervision scope, responsibilities, communication, and fees from the outset.'}
               </ServiceCard>
             </div>
             <div className="supporting-services">
@@ -405,8 +406,8 @@ export default function App() {
               <a href="#contact" onClick={() => pickService('Overseas property search')}><Icon id="globe" /> Overseas property search</a>
             </div>
             <div className="services-footer">
-              <div><h3>{isAr ? L('services.footerH') : 'Not sure where to start?'}</h3><p>{isAr ? L('services.footerP') : 'Tell us your goals. We’ll help you identify the right next step.'}</p></div>
-              <a className="button button-dark" href="#contact">{isAr ? L('services.footerCta') : 'Talk to our team'} <Icon id="arrow" /></a>
+              <div><h3>{tr ? L('services.footerH') : 'Not sure where to start?'}</h3><p>{tr ? L('services.footerP') : 'Tell us your goals. We’ll help you identify the right next step.'}</p></div>
+              <a className="button button-dark" href="#contact">{tr ? L('services.footerCta') : 'Talk to our team'} <Icon id="arrow" /></a>
             </div>
           </div>
         </section>
@@ -499,7 +500,7 @@ export default function App() {
         <section id="contact" className="section contact">
           <div className="container contact-layout">
             <div className="contact-copy">
-              <p className="eyebrow">{isAr ? L('contact.eyebrow') : 'LET’S MAKE YOUR NEXT MOVE COUNT'}</p>
+              <p className="eyebrow">{tr ? L('contact.eyebrow') : 'LET’S MAKE YOUR NEXT MOVE COUNT'}</p>
               <h2>{isAr ? <>{L('contact.h1')}<br />{L('contact.h2')}<br /><em>{L('contact.h3')}</em></> : <>Your goals.<br />Our expertise.<br /><em>Let’s talk.</em></>}</h2>
               <p>{isAr ? <>{L('contact.sub')}<br />{L('contact.sub2')}</> : <>Investing, buying, selling, renting, or managing?<br />Tell us what you need. We’ll help you take the next step.</>}</p>
               <div className="contact-details">
@@ -511,8 +512,8 @@ export default function App() {
             </div>
             <form id="enquiry-form" ref={formRef} className="enquiry-form" onSubmit={onSubmit}>
               <span className="form-eyebrow">A CONVERSATION IS A GOOD START</span>
-              <h3>{isAr ? L('form.title') : 'How can we help you?'}</h3>
-              <p className="form-intro">{isAr ? L('form.intro') : 'Share a few details to prepare an email to our team.'}</p>
+              <h3>{tr ? L('form.title') : 'How can we help you?'}</h3>
+              <p className="form-intro">{tr ? L('form.intro') : 'Share a few details to prepare an email to our team.'}</p>
               <div className="form-row">
                 <div><label htmlFor="name">Full name <span>*</span></label><input id="name" name="name" autoComplete="name" placeholder="Your full name" required maxLength={120} /></div>
                 <div><label htmlFor="email">Email address <span>*</span></label><input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required maxLength={254} /></div>
@@ -530,7 +531,7 @@ export default function App() {
               <input id="timezone" name="timezone" placeholder="e.g. Afternoons, London time" maxLength={120} />
               <label htmlFor="message">What do you have in mind? <span>*</span></label>
               <textarea id="message" name="message" rows={3} placeholder="Tell us about your goals, property, or requirements…" required maxLength={2000} />
-              <button className="button" type="submit">{isAr ? L('form.submit') : 'Prepare my enquiry'} <Icon id="arrow" /></button>
+              <button className="button" type="submit">{tr ? L('form.submit') : 'Prepare my enquiry'} <Icon id="arrow" /></button>
               <p className="form-disclosure">This form opens your email app. Nothing is submitted or stored by this website. Please do not include identity documents or financial account details.</p>
               <p id="form-status" role="status" aria-live="polite">{status}</p>
               <noscript><p>Email <a href={`mailto:${EMAIL}`}>{EMAIL}</a> directly to make an enquiry.</p></noscript>

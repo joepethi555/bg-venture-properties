@@ -74,8 +74,9 @@ nav { display: flex; align-items: center; gap: 27px; font-size: 11px; font-weigh
 .nav-link.active { color: var(--gold-dark); }
 .lang-toggle { display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--line); border-radius: 20px; padding: 7px 14px; font-size: 10px; font-weight: 600; color: var(--muted); }
 .lang-toggle i { width: 1px; height: 12px; background: var(--line); }
-.lang-toggle .lang-other { font-family: var(--body); }
-.lang-toggle[aria-pressed="true"] { border-color: var(--gold); color: var(--gold-dark); }
+.lang-toggle span { color: #b8b0a0; transition: color .2s; }
+.lang-toggle span.lang-active { color: var(--gold-dark); font-weight: 700; }
+.lang-toggle[aria-pressed="true"] { border-color: var(--gold); }
 .menu-toggle { display: none; }
 .hero { min-height: 710px; position: relative; color: white; overflow: hidden; background: #282927; }
 .hero-image, .hero-overlay { position: absolute; inset: 0; }

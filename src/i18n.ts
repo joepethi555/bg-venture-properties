@@ -1,4 +1,4 @@
-export type Lang = 'en' | 'ar';
+export type Lang = 'en' | 'ar' | 'zh';
 
 const ar: Record<string, string> = {
   'nav.home': 'الرئيسية',
@@ -59,6 +59,67 @@ const ar: Record<string, string> = {
   'form.submit': 'جهّز استفساري',
 };
 
+const zh: Record<string, string> = {
+  'nav.home': '首页',
+  'nav.company': '关于我们',
+  'nav.expertise': '我们的专长',
+  'nav.investors': '国际投资者',
+  'nav.contact': '联系我们',
+  'nav.cta': '咨询专家',
+  'hero.eyebrow': '迪拜房地产投资专家',
+  'hero.line1': '理想的房产。',
+  'hero.line2': '值得信赖的伙伴。',
+  'hero.line3': '无限可能。',
+  'hero.desc': '以您为中心的迪拜房地产经纪服务。无论您身处何地——租赁、买卖以及管理监督。',
+  'hero.cta1': '讨论您的目标',
+  'hero.cta2': '了解我们的专长',
+  'hero.check1': '本地市场专长',
+  'hero.check2': '国际客户支持',
+  'hero.bottomLeft': '您的抱负。我们的本地专长。',
+  'hero.bottomRight': '探索 BG Venture',
+  'quick.label': '您的下一步',
+  'quick.title': '我们能帮您什么？',
+  'quick.invest': '我想<strong>投资房产</strong>',
+  'quick.space': '我正在寻找<strong>办公室或住宅</strong>',
+  'quick.landlord': '我是房东<strong>需要支持</strong>',
+  'about.eyebrow': '您下一步背后的公司',
+  'about.h1': '房地产专长。',
+  'about.h2': '个人承诺。',
+  'about.sub': '从寻找您的第一笔投资到管理成熟的投资组合，我们在迪拜连接人、房产与机遇。',
+  'stat1.h': '我们服务的房东',
+  'stat2.h': '我们服务的房产',
+  'stat3.h': '本地知识',
+  'stat4.h': '国际客户',
+  'mission.label': '我们的使命',
+  'mission.text': '通过清晰的建议、规范的服务和超越交易的持续支持，将投资者、房东和企业与合适的迪拜房产机会连接起来。',
+  'vision.label': '我们的愿景',
+  'vision.text': '成为全球投资者信赖的迪拜房产合作伙伴——以清晰、诚信以及我们为每个房产决策带来的信心而闻名。',
+  'services.eyebrow': '我们的服务',
+  'services.h1': '三大核心服务。',
+  'services.h2': '一个值得信赖的伙伴。',
+  'services.sub': '持牌房地产经纪业务——涵盖租赁、销售和管理监督。',
+  'svc1.h': '租赁房产经纪',
+  'svc1.p': '我们将房东与潜在租户连接起来，帮助租户找到合适的住宅、办公室或商业空间——满足各种需求。',
+  'svc2.h': '买卖房产经纪',
+  'svc2.p': '找到合适的房产或将您的房产与潜在买家连接。提供搜索、房产定位、咨询和后续步骤支持——包括投资机会。',
+  'svc3.h': '管理监督',
+  'svc3.p': '为您迪拜房产的持续需求提供支持。从一开始就商定监督范围、责任、沟通和费用。',
+  'services.footerH': '不知道从哪里开始？',
+  'services.footerP': '告诉我们您的目标。我们将帮您确定合适的下一步。',
+  'services.footerCta': '与我们的团队交谈',
+  'contact.eyebrow': '让您的下一步更有价值',
+  'contact.h1': '您的目标。',
+  'contact.h2': '我们的专长。',
+  'contact.h3': '让我们谈谈。',
+  'contact.sub': '投资、购买、出售、租赁或管理？',
+  'contact.sub2': '告诉我们您需要什么。我们将帮您迈出下一步。',
+  'form.title': '我们能帮您什么？',
+  'form.intro': '分享一些细节，为我们的团队准备一封邮件。',
+  'form.submit': '准备我的咨询',
+};
+
 export function t(key: string, lang: Lang): string {
-  return lang === 'ar' ? ar[key] ?? key : key;
+  if (lang === 'ar') return ar[key] ?? key;
+  if (lang === 'zh') return zh[key] ?? key;
+  return key;
 }
