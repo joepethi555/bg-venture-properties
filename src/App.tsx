@@ -342,7 +342,7 @@ export default function App() {
                 <a href={`tel:${LANDLINE_TEL}`}><span className="contact-icon"><Icon id="phone" /></span><span><small>CALL OUR DUBAI OFFICE</small>{LANDLINE}</span></a>
                 <a href={`tel:${MOBILE_TEL}`}><span className="contact-icon"><Icon id="phone" /></span><span><small>MOBILE</small>{MOBILE}</span></a>
               </div>
-              <div className="office-address"><Icon id="pin" /><p><strong>Iris Bay Tower, Business Bay</strong><br />Dubai, United Arab Emirates</p></div>
+              <div className="office-address"><Icon id="pin" /><p><strong>Office 1508, Iris Bay Tower</strong><br />Business Bay, Dubai, United Arab Emirates</p></div>
             </div>
             <form id="enquiry-form" ref={formRef} className="enquiry-form" onSubmit={onSubmit}>
               <span className="form-eyebrow">A CONVERSATION IS A GOOD START</span>
@@ -385,6 +385,10 @@ export default function App() {
           <div><h3>Explore</h3><a href="#about">Our company</a><a href="#services">Our expertise</a><a href="#international">International investors</a><a href="#process">How we work</a></div>
           <div><h3>Our expertise</h3><a href="#contact" onClick={() => pickService('Office leasing')}>Leasing brokerage</a><a href="#contact" onClick={() => pickService('Buying or selling')}>Buying &amp; selling brokerage</a><a href="#contact" onClick={() => pickService('Property management')}>Management supervision</a><a href="#contact" onClick={() => pickService('Overseas property search')}>Overseas property search</a></div>
           <div><h3>Let’s connect</h3><a href={`tel:${LANDLINE_TEL}`}>{LANDLINE}</a><a href={`tel:${MOBILE_TEL}`}>{MOBILE}</a><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
+        </div>
+        <div className="container footer-map">
+          <div className="footer-map-label"><Icon id="pin" /><span>Office 1508, Iris Bay Tower · Business Bay, Dubai, UAE</span><a href="https://www.google.com/maps/search/?api=1&query=Iris+Bay+Tower+Business+Bay+Dubai" target="_blank" rel="noopener noreferrer">Open in Google Maps <Icon id="up" /></a></div>
+          <iframe title="BG Venture Properties office location — Iris Bay Tower, Business Bay, Dubai" src="https://www.google.com/maps?q=Iris%20Bay%20Tower%2C%20Business%20Bay%2C%20Dubai%2C%20UAE&z=16&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
         </div>
         <div className="container footer-bottom">
           <span>© {new Date().getFullYear()} BG Venture Properties. All rights reserved.</span>
