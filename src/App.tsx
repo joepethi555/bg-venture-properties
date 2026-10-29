@@ -415,22 +415,22 @@ export default function App() {
         <section id="spaces" className="section spaces">
           <div className="container">
             <div className="section-heading split">
-              <div><p className="eyebrow">THE RIGHT SPACE MAKES A DIFFERENCE</p><h2>For your business.<br /><em>For your next chapter.</em></h2></div>
-              <p>A new workspace. A place to call home.<br />A property with investment potential.</p>
+              <div><p className="eyebrow">{tr ? L('spaces.eyebrow') : 'THE RIGHT SPACE MAKES A DIFFERENCE'}</p><h2>{tr ? <>{L('spaces.h1')}<br /><em>{L('spaces.h2')}</em></> : <>For your business.<br /><em>For your next chapter.</em></>}</h2></div>
+              <p>{tr ? L('spaces.sub') : 'A new workspace. A place to call home. A property with investment potential.'}</p>
             </div>
             <div className="slider-wrap">
               <div className="slider" ref={sliderRef}>
                 {SLIDES.map((s, i) => (
                   <figure className="slide" key={s.src}>
                     <img src={s.src} alt={s.label} width="900" height="600" loading="lazy" />
-                    <figcaption><span>{String(i + 1).padStart(2, '0')}</span> {s.label}</figcaption>
+                    <figcaption><span>{String(i + 1).padStart(2, '0')}</span> {tr ? L(`cap${i + 1}`) : s.label}</figcaption>
                   </figure>
                 ))}
               </div>
               <button className="slider-btn prev" type="button" aria-label="Previous photo" onClick={() => sliderRef.current?.scrollBy({ left: -340, behavior: 'smooth' })}>←</button>
               <button className="slider-btn next" type="button" aria-label="Next photo" onClick={() => sliderRef.current?.scrollBy({ left: 340, behavior: 'smooth' })}>→</button>
             </div>
-            <p className="image-disclaimer">Illustrative photography. Contact our team for current property availability and details.</p>
+            <p className="image-disclaimer">{tr ? L('spaces.disc') : 'Illustrative photography. Contact our team for current property availability and details.'}</p>
           </div>
         </section>
 
@@ -438,19 +438,19 @@ export default function App() {
           <div className="container international-layout">
             <div className="international-visual">
               <img src="/skyline.jpg" alt="Aerial view of Burj Al Arab and Dubai's coastline" width="1000" height="1200" loading="lazy" />
-              <div className="location-label"><Icon id="pin" /><span>YOUR LOCAL CONNECTION<strong>Dubai, United Arab Emirates</strong></span><span className="location-dot" /></div>
-              <div className="international-caption"><Icon id="globe" /><span>Wherever you are.<br /><strong>We’re here in Dubai.</strong></span></div>
+              <div className="location-label"><Icon id="pin" /><span>{tr ? L('intl.card1') : 'YOUR LOCAL CONNECTION'}<strong>{tr ? L('intl.card2') : 'Dubai, United Arab Emirates'}</strong></span><span className="location-dot" /></div>
+              <div className="international-caption"><Icon id="globe" /><span>{tr ? <>{L('intl.cap1')}<br /><strong>{L('intl.cap2')}</strong></> : <>Wherever you are.<br /><strong>We’re here in Dubai.</strong></>}</span></div>
             </div>
             <div className="international-copy">
-              <p className="eyebrow">LOCAL EXPERTISE. INTERNATIONAL REACH.</p>
-              <h2>You don’t have to be here.<br /><em>Your property partner is.</em></h2>
-              <p>Investing or finding property in another country starts with having the right people on the ground. We help international clients explore Dubai with a clearer understanding of their options.</p>
+              <p className="eyebrow">{tr ? L('intl.eyebrow') : 'LOCAL EXPERTISE. INTERNATIONAL REACH.'}</p>
+              <h2>{tr ? <>{L('intl.h1')}<br /><em>{L('intl.h2')}</em></> : <>You don’t have to be here.<br /><em>Your property partner is.</em></>}</h2>
+              <p>{tr ? L('intl.p') : 'Investing or finding property in another country starts with having the right people on the ground. We help international clients explore Dubai with a clearer understanding of their options.'}</p>
               <ul className="feature-list">
-                <Feature h="A search built around your requirements">Your objectives, preferred areas, budget, and timing guide the shortlist.</Feature>
-                <Feature h="Guidance through the practical details">Understand the transaction stages and which steps may require documentation or specialist advice.</Feature>
-                <Feature h="Support beyond finding the property">Discuss tenants, leasing, and ongoing management before you take the next step.</Feature>
+                <Feature h={tr ? L('intl.f1h') : 'A search built around your requirements'}>{tr ? L('intl.f1p') : 'Your objectives, preferred areas, budget, and timing guide the shortlist.'}</Feature>
+                <Feature h={tr ? L('intl.f2h') : 'Guidance through the practical details'}>{tr ? L('intl.f2p') : 'Understand the transaction stages and which steps may require documentation or specialist advice.'}</Feature>
+                <Feature h={tr ? L('intl.f3h') : 'Support beyond finding the property'}>{tr ? L('intl.f3p') : 'Discuss tenants, leasing, and ongoing management before you take the next step.'}</Feature>
               </ul>
-              <a className="button" href="#contact" onClick={() => pickService('Overseas property search')}>Connect with your Dubai team <Icon id="arrow" /></a>
+              <a className="button" href="#contact" onClick={() => pickService('Overseas property search')}>{tr ? L('intl.cta') : 'Connect with your Dubai team'} <Icon id="arrow" /></a>
             </div>
           </div>
         </section>
@@ -458,41 +458,41 @@ export default function App() {
         <section id="landlords" className="section landlords">
           <div className="container landlord-layout">
             <div>
-              <p className="eyebrow">FOR LANDLORDS &amp; PROPERTY OWNERS</p>
-              <h2>Your property deserves<br /><em>the right attention.</em></h2>
-              <p>Finding tenants. Reaching buyers. Managing the everyday.<br />We help you move from property ownership to a practical plan.</p>
-              <a className="button button-outline" href="#contact" onClick={() => pickService('Property management')}>Let’s talk about your property <Icon id="arrow" /></a>
+              <p className="eyebrow">{tr ? L('land.eyebrow') : 'FOR LANDLORDS & PROPERTY OWNERS'}</p>
+              <h2>{tr ? <>{L('land.h1')}<br /><em>{L('land.h2')}</em></> : <>Your property deserves<br /><em>the right attention.</em></>}</h2>
+              <p>{tr ? L('land.p') : 'Finding tenants. Reaching buyers. Managing the everyday. We help you move from property ownership to a practical plan.'}</p>
+              <a className="button button-outline" href="#contact" onClick={() => pickService('Property management')}>{tr ? L('land.cta') : 'Let’s talk about your property'} <Icon id="arrow" /></a>
             </div>
             <div className="landlord-services">
-              <LandlordRow n="01" h="Find the right tenants" p="Connect your property with people looking to rent." onPick={() => pickService('Tenant sourcing or residential rental')} />
-              <LandlordRow n="02" h="Reach prospective buyers" p="Get support presenting your property to potential clients." onPick={() => pickService('Buying or selling')} />
-              <LandlordRow n="03" h="Manage with a clearer plan" p="Agree the services and communication your property needs." onPick={() => pickService('Property management')} />
+              <LandlordRow n="01" h={tr ? L('land.r1h') : 'Find the right tenants'} p={tr ? L('land.r1p') : 'Connect your property with people looking to rent.'} onPick={() => pickService('Tenant sourcing or residential rental')} />
+              <LandlordRow n="02" h={tr ? L('land.r2h') : 'Reach prospective buyers'} p={tr ? L('land.r2p') : 'Get support presenting your property to potential clients.'} onPick={() => pickService('Buying or selling')} />
+              <LandlordRow n="03" h={tr ? L('land.r3h') : 'Manage with a clearer plan'} p={tr ? L('land.r3p') : 'Agree the services and communication your property needs.'} onPick={() => pickService('Property management')} />
             </div>
           </div>
         </section>
 
         <section id="process" className="section process">
           <div className="container">
-            <div className="section-heading centered"><p className="eyebrow">A CLEAR PATH FORWARD</p><h2>From your first question<br /><em>to your next move.</em></h2></div>
+            <div className="section-heading centered"><p className="eyebrow">{tr ? L('proc.eyebrow') : 'A CLEAR PATH FORWARD'}</p><h2>{tr ? <>{L('proc.h1')}<br /><em>{L('proc.h2')}</em></> : <>From your first question<br /><em>to your next move.</em></>}</h2></div>
             <div className="steps">
-              <Step n="01" h="Tell us what matters" p="We start with your objectives, budget, property requirements, and timeframe." />
-              <Step n="02" h="Explore the right options" p="Review suitable properties or an appropriate service plan, with the details explained." />
-              <Step n="03" h="Make an informed decision" p="Understand the costs, responsibilities, documentation, and next steps." />
-              <Step n="04" h="Plan for what comes next" p="Discuss leasing, tenants, or property management as your needs evolve." />
+              <Step n="01" h={tr ? L('proc.s1h') : 'Tell us what matters'} p={tr ? L('proc.s1p') : 'We start with your objectives, budget, property requirements, and timeframe.'} />
+              <Step n="02" h={tr ? L('proc.s2h') : 'Explore the right options'} p={tr ? L('proc.s2p') : 'Review suitable properties or an appropriate service plan, with the details explained.'} />
+              <Step n="03" h={tr ? L('proc.s3h') : 'Make an informed decision'} p={tr ? L('proc.s3p') : 'Understand the costs, responsibilities, documentation, and next steps.'} />
+              <Step n="04" h={tr ? L('proc.s4h') : 'Plan for what comes next'} p={tr ? L('proc.s4p') : 'Discuss leasing, tenants, or property management as your needs evolve.'} />
             </div>
-            <p className="risk-note"><Icon id="invest" /><span>Informed investment matters. Property values and rental income can rise or fall. Returns are not guaranteed. Evaluate costs, risks, and your own circumstances before committing.</span></p>
+            <p className="risk-note"><Icon id="invest" /><span>{tr ? L('proc.note') : 'Informed investment matters. Property values and rental income can rise or fall. Returns are not guaranteed. Evaluate costs, risks, and your own circumstances before committing.'}</span></p>
           </div>
         </section>
 
         <section className="section faq-section">
           <div className="container faq-layout">
-            <div><p className="eyebrow">YOUR QUESTIONS, ANSWERED</p><h2>Clarity before<br /><em>commitment.</em></h2><p>Good decisions start with good questions.</p><a className="text-link" href="#contact">Ask our team <Icon id="arrow" /></a></div>
+            <div><p className="eyebrow">{tr ? L('faq.eyebrow') : 'YOUR QUESTIONS, ANSWERED'}</p><h2>{tr ? <>{L('faq.h1')}<br /><em>{L('faq.h2')}</em></> : <>Clarity before<br /><em>commitment.</em></>}</h2><p>{tr ? L('faq.p') : 'Good decisions start with good questions.'}</p><a className="text-link" href="#contact">{tr ? L('faq.link') : 'Ask our team'} <Icon id="arrow" /></a></div>
             <div className="faqs">
-              <Faq q="Can you find me a property if I am outside the UAE?">Yes. We help overseas clients search for Dubai property based on their requirements. We can discuss your objectives remotely and explain which transaction steps may need documentation, attendance, verification, or professional support.</Faq>
-              <Faq q="Can you help me find an office for my business?">Yes. Share your preferred location, team size, budget, intended use, and move-in timeframe. We will help you explore commercial space and identify requirements that need confirmation before a lease is agreed.</Faq>
-              <Faq q="I own a property. Can you help me find tenants or buyers?">Yes. We help landlords connect with prospective tenants and support owners looking to sell. Contact us with your property details to discuss availability, positioning, and the appropriate service scope.</Faq>
-              <Faq q="What does your property management service include?">The scope is agreed around your property and requirements. Speak with us about tenant communication, leasing support, maintenance coordination, reporting, fees, and approvals. Only services specified in your agreement are included.</Faq>
-              <Faq q="Do you guarantee returns on investment properties?">No. Property prices, rent, and occupancy change with market conditions. Any estimates must be considered alongside their assumptions, costs, and risks. Past performance does not guarantee future results.</Faq>
+              <Faq q={tr ? L('faq.q1') : 'Can you find me a property if I am outside the UAE?'}>{tr ? L('faq.a1') : 'Yes. We help overseas clients search for Dubai property based on their requirements. We can discuss your objectives remotely and explain which transaction steps may need documentation, attendance, verification, or professional support.'}</Faq>
+              <Faq q={tr ? L('faq.q2') : 'Can you help me find an office for my business?'}>{tr ? L('faq.a2') : 'Yes. Share your preferred location, team size, budget, intended use, and move-in timeframe. We will help you explore commercial space and identify requirements that need confirmation before a lease is agreed.'}</Faq>
+              <Faq q={tr ? L('faq.q3') : 'I own a property. Can you help me find tenants or buyers?'}>{tr ? L('faq.a3') : 'Yes. We help landlords connect with prospective tenants and support owners looking to sell. Contact us with your property details to discuss availability, positioning, and the appropriate service scope.'}</Faq>
+              <Faq q={tr ? L('faq.q4') : 'What does your property management service include?'}>{tr ? L('faq.a4') : 'The scope is agreed around your property and requirements. Speak with us about tenant communication, leasing support, maintenance coordination, reporting, fees, and approvals. Only services specified in your agreement are included.'}</Faq>
+              <Faq q={tr ? L('faq.q5') : 'Do you guarantee returns on investment properties?'}>{tr ? L('faq.a5') : 'No. Property prices, rent, and occupancy change with market conditions. Any estimates must be considered alongside their assumptions, costs, and risks. Past performance does not guarantee future results.'}</Faq>
             </div>
           </div>
         </section>
