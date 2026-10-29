@@ -37,7 +37,7 @@ const SERVICE_PAGES: Record<string, {
   '#/service-selling': {
     eyebrow: '02 / BUYING & SELLING BROKERAGE',
     title: 'Buy with clarity.', em: 'Sell with confidence.',
-    img: '/p9.jpg', alt: 'Two professionals discussing a property investment over documents',
+    img: '/contract.jpg', alt: 'Hands signing a real estate contract with a gold pen',
     intro: 'From your first viewing to the final signature, our brokerage team helps you find the right property — or the right buyer — with a clear view of price, process, and opportunity.',
     offers: [
       { h: 'Buyer representation', p: 'A focused shortlist matched to your goals, budget, and investment horizon — in Dubai or from abroad.' },
@@ -88,6 +88,10 @@ const SLIDES = [
   { src: '/p8.jpg', label: 'Investment discussions' },
   { src: '/p9.jpg', label: 'Deal negotiation' },
   { src: '/p10.jpg', label: 'Apartment living' },
+  { src: '/villa.jpg', label: 'Luxury villas' },
+  { src: '/aerial.jpg', label: 'Dubai investment districts' },
+  { src: '/finance.jpg', label: 'Investment planning' },
+  { src: '/contract.jpg', label: 'Closing the deal' },
 ];
 
 const NAV_ITEMS = [
