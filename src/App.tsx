@@ -367,9 +367,9 @@ export default function App() {
               <div className="stat"><span>04 / OUR PERSPECTIVE</span><strong>Global<span>.</span></strong><h3>{tr ? L('stat4.h') : 'International clients'}</h3><p>Your location need not limit your search.</p></div>
             </div>
             <div className="scope-block">
-              <p className="eyebrow scope-eyebrow"><i />OUR SCOPE</p>
-              <p className="scope-text">We are <strong>BG Venture Properties</strong> — a Dubai real estate brokerage focused on three things: <mark>leasing property brokerage</mark>, <mark>buying &amp; selling brokerage</mark>, and <mark>real estate management supervision</mark>. For investors, landlords, businesses, and people looking for their next property, our role is simple: <em>understand what you need, help you find it, and support what comes next.</em></p>
-              <a className="text-link" href="#contact">Get to know your property partner <Icon id="arrow" /></a>
+              <p className="eyebrow scope-eyebrow"><i />{tr ? L('scope.eyebrow') : 'OUR SCOPE'}</p>
+              <p className="scope-text">{tr ? <>{L('scope.a1')} <strong>BG Venture Properties</strong> {L('scope.a2')} <mark>{L('scope.m1')}</mark>{L('scope.a3')} <mark>{L('scope.m2')}</mark>{L('scope.a4')} <mark>{L('scope.m3')}</mark>{L('scope.a5')} <em>{L('scope.a6')}</em></> : <>We are <strong>BG Venture Properties</strong> — a Dubai real estate brokerage focused on three things: <mark>leasing property brokerage</mark>, <mark>buying &amp; selling brokerage</mark>, and <mark>real estate management supervision</mark>. For investors, landlords, businesses, and people looking for their next property, our role is simple: <em>understand what you need, help you find it, and support what comes next.</em></>}</p>
+              <a className="text-link" href="#contact">{tr ? L('scope.link') : 'Get to know your property partner'} <Icon id="arrow" /></a>
             </div>
             <div className="purpose-grid">
               <div className="purpose-card" data-tilt><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
