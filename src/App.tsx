@@ -361,8 +361,9 @@ export default function App() {
               <div className="stat"><span>03 / OUR HOME MARKET</span><strong>Dubai<span>.</span></strong><h3>{isAr ? L('stat3.h') : 'Local knowledge'}</h3><p>On-the-ground support in the UAE.</p></div>
               <div className="stat"><span>04 / OUR PERSPECTIVE</span><strong>Global<span>.</span></strong><h3>{isAr ? L('stat4.h') : 'International clients'}</h3><p>Your location need not limit your search.</p></div>
             </div>
-            <div className="about-bottom">
-              <p>We are <strong>BG Venture Properties</strong>—a Dubai real estate brokerage focused on three things: <strong>leasing property brokerage</strong>, <strong>buying &amp; selling brokerage</strong>, and <strong>real estate management supervision</strong>. For investors, landlords, businesses, and people looking for their next property, our role is simple: understand what you need, help you find it, and support what comes next.</p>
+            <div className="scope-block">
+              <p className="eyebrow scope-eyebrow"><i />OUR SCOPE</p>
+              <p className="scope-text">We are <strong>BG Venture Properties</strong> — a Dubai real estate brokerage focused on three things: <mark>leasing property brokerage</mark>, <mark>buying &amp; selling brokerage</mark>, and <mark>real estate management supervision</mark>. For investors, landlords, businesses, and people looking for their next property, our role is simple: <em>understand what you need, help you find it, and support what comes next.</em></p>
               <a className="text-link" href="#contact">Get to know your property partner <Icon id="arrow" /></a>
             </div>
             <div className="purpose-grid">

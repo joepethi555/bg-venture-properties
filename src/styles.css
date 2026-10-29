@@ -182,9 +182,15 @@ h1 em { color: var(--gold); }
 .stat h3 { font-size: 13px; margin-bottom: 9px; }
 .stat p { color: var(--muted); font-size: 11px; margin: 0; max-width: 210px; }
 .about-bottom { display: flex; justify-content: space-between; align-items: center; gap: 55px; padding-top: 30px; border-top: 1px solid var(--line); }
-.about-bottom p { margin: 0; color: var(--muted); max-width: 780px; font-size: 12px; }
-.about-bottom strong { color: var(--ink); }
-.about-bottom .text-link { min-width: 220px; font-size: 11px; }
+.scope-block { position: relative; margin-top: 45px; padding: 55px 60px 45px; text-align: center; background: linear-gradient(180deg, #fdfcf8 0%, #f8f5ec 100%); border: 1px solid #e6d9b5; border-radius: 10px; box-shadow: 0 18px 50px #4a3a120d; }
+.scope-block::before { content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); width: 90px; height: 3px; background: var(--gold); border-radius: 0 0 3px 3px; }
+.scope-eyebrow { justify-content: center; font-size: 9px; letter-spacing: 2.4px; }
+.scope-eyebrow i { width: 26px; height: 1px; background: var(--gold); }
+.scope-text { font-family: var(--display); font-size: clamp(19px, 1.9vw, 25px); line-height: 1.75; color: var(--ink); max-width: 1000px; margin: 0 auto 28px; }
+.scope-text strong { font-weight: 600; }
+.scope-text mark { background: linear-gradient(180deg, transparent 58%, #ecd8a0 58%); color: #6b5318; padding: 0 3px; border-radius: 2px; }
+.scope-text em { font-style: italic; color: var(--muted); }
+.scope-block .text-link { display: inline-flex; }
 .purpose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 55px; }
 .purpose-card { padding: 40px 42px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
 .purpose-label { font-size: 9px; letter-spacing: 2.2px; font-weight: 700; color: var(--gold-dark); display: block; margin-bottom: 18px; }
@@ -420,6 +426,8 @@ footer { background: #141618; color: #a9adb2; position: relative; }
   .slide { flex: 0 0 240px; height: 320px; }
   .offer-card { padding: 24px; }
   .service-page-cta { padding: 40px 20px; }
+  .scope-block { padding: 40px 24px 34px; margin-top: 35px; }
+  .scope-text { font-size: 18px; }
   .topbar { font-size: 9px; }
   .hero { min-height: 665px; }
   .hero-content { padding-top: 66px; padding-bottom: 125px; }
