@@ -63,18 +63,18 @@ const SERVICE_PAGES: Record<string, {
 };
 
 const DEVELOPERS = [
-  { name: 'EMAAR', accent: '#1a1a2e' },
-  { name: 'DAMAC', accent: '#8b6914' },
-  { name: 'NAKHEEL', accent: '#0e6e6e' },
-  { name: 'MERAAS', accent: '#c0392b' },
-  { name: 'SOBHA', accent: '#2471a3' },
-  { name: 'ALDAR', accent: '#7d3c98' },
-  { name: 'OMNIYAT', accent: '#1b4f72' },
-  { name: 'BINGHATTI', accent: '#b9770e' },
-  { name: 'AZIZI', accent: '#117864' },
-  { name: 'ELLINGTON', accent: '#5d6d7e' },
-  { name: 'DANUBE', accent: '#21618c' },
-  { name: 'ARADA', accent: '#935116' },
+  { key: 'emaar', name: 'EMAAR', accent: '#1a1a2e', logo: true },
+  { key: 'damac', name: 'DAMAC', accent: '#8b6914', logo: true },
+  { key: 'nakheel', name: 'NAKHEEL', accent: '#0e6e6e', logo: false },
+  { key: 'meraas', name: 'MERAAS', accent: '#c0392b', logo: false },
+  { key: 'sobha', name: 'SOBHA', accent: '#2471a3', logo: true },
+  { key: 'aldar', name: 'ALDAR', accent: '#7d3c98', logo: true },
+  { key: 'omniyat', name: 'OMNIYAT', accent: '#1b4f72', logo: true },
+  { key: 'binghatti', name: 'BINGHATTI', accent: '#b9770e', logo: true },
+  { key: 'azizi', name: 'AZIZI', accent: '#117864', logo: false },
+  { key: 'ellington', name: 'ELLINGTON', accent: '#5d6d7e', logo: false },
+  { key: 'danube', name: 'DANUBE', accent: '#21618c', logo: true },
+  { key: 'arada', name: 'ARADA', accent: '#935116', logo: true },
 ];
 
 const SLIDES = [
@@ -336,7 +336,9 @@ export default function App() {
                 <div className="dev-group" key={copy} aria-hidden={copy === 1}>
                   {DEVELOPERS.map((d) => (
                     <span className="dev-card" key={`${copy}-${d.name}`}>
-                      <i className="dev-mark" style={{ background: d.accent }} />
+                      {d.logo
+                        ? <img className="dev-logo" src={`/devlogos/${d.key}.png`} alt="" width="28" height="28" loading="lazy" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                        : <i className="dev-mark" style={{ background: d.accent }} />}
                       <span className="dev-name">{d.name}</span>
                     </span>
                   ))}
