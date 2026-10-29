@@ -298,7 +298,7 @@ export default function App() {
           <div className="container hero-content">
             <p className="eyebrow hero-eyebrow"><span /> {tr ? L('hero.eyebrow') : 'DUBAI REAL ESTATE INVESTMENT EXPERTS'}</p>
             <h1 id="hero-title">
-              {isAr ? <>{L('hero.line1')}<br />{L('hero.line2')}<br /><em>{L('hero.line3')}</em></>
+              {tr ? <>{L('hero.line1')}<br />{L('hero.line2')}<br /><em>{L('hero.line3')}</em></>
                 : <>The right property.<br />The right partner.<br /><em>A world of possibility.</em></>}
             </h1>
             <p className="hero-description">
@@ -357,7 +357,7 @@ export default function App() {
           <div className="container">
             <div className="section-heading centered">
               <p className="eyebrow">{tr ? L('about.eyebrow') : 'THE COMPANY BEHIND YOUR NEXT MOVE'}</p>
-              <h2>{isAr ? <>{L('about.h1')}<br /><em>{L('about.h2')}</em></> : <>Property expertise.<br /><em>Personal commitment.</em></>}</h2>
+              <h2>{tr ? <>{L('about.h1')}<br /><em>{L('about.h2')}</em></> : <>Property expertise.<br /><em>Personal commitment.</em></>}</h2>
               <p>{tr ? L('about.sub') : <>From finding your first investment to managing an established portfolio,<br className="desktop-break" /> we connect people, properties, and opportunities across Dubai.</>}</p>
             </div>
             <div className="stats-grid">
@@ -384,7 +384,7 @@ export default function App() {
             <div className="section-heading split">
               <div>
                 <p className="eyebrow">{tr ? L('services.eyebrow') : 'WHAT WE DO'}</p>
-                <h2>{isAr ? <>{L('services.h1')}<br /><em>{L('services.h2')}</em></> : <>Three core services.<br /><em>One trusted partner.</em></>}</h2>
+                <h2>{tr ? <>{L('services.h1')}<br /><em>{L('services.h2')}</em></> : <>Three core services.<br /><em>One trusted partner.</em></>}</h2>
               </div>
               <p>{tr ? L('services.sub') : <>Licensed real estate brokerage activities—<br />covering leasing, sales, and management supervision.</>}</p>
             </div>
@@ -501,8 +501,8 @@ export default function App() {
           <div className="container contact-layout">
             <div className="contact-copy">
               <p className="eyebrow">{tr ? L('contact.eyebrow') : 'LET’S MAKE YOUR NEXT MOVE COUNT'}</p>
-              <h2>{isAr ? <>{L('contact.h1')}<br />{L('contact.h2')}<br /><em>{L('contact.h3')}</em></> : <>Your goals.<br />Our expertise.<br /><em>Let’s talk.</em></>}</h2>
-              <p>{isAr ? <>{L('contact.sub')}<br />{L('contact.sub2')}</> : <>Investing, buying, selling, renting, or managing?<br />Tell us what you need. We’ll help you take the next step.</>}</p>
+              <h2>{tr ? <>{L('contact.h1')}<br />{L('contact.h2')}<br /><em>{L('contact.h3')}</em></> : <>Your goals.<br />Our expertise.<br /><em>Let’s talk.</em></>}</h2>
+              <p>{tr ? <>{L('contact.sub')}<br />{L('contact.sub2')}</> : <>Investing, buying, selling, renting, or managing?<br />Tell us what you need. We’ll help you take the next step.</>}</p>
               <div className="contact-details">
                 <a href={`mailto:${EMAIL}`}><span className="contact-icon"><Icon id="mail" /></span><span><small>EMAIL OUR TEAM</small>{EMAIL}</span></a>
                 <a href={`tel:${LANDLINE_TEL}`}><span className="contact-icon"><Icon id="phone" /></span><span><small>CALL OUR DUBAI OFFICE</small>{LANDLINE}</span></a>
