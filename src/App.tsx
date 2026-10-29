@@ -545,7 +545,7 @@ export default function App() {
         <div className="footer-accent" />
         <div className="container footer-main">
           <div className="footer-brand-block">
-            <a className="footer-wordmark" href="#home">BG VENTURE<span>PROPERTIES</span></a>
+            <a className="footer-logo-link" href="#home" aria-label="BG Venture Properties home"><img className="footer-logo" src="/logo-transparent.png" alt="BG Venture Properties" width="750" height="617" /></a>
             <p>Dubai real estate expertise.<br />Personal support. Global perspective.</p>
             <span className="footer-location"><Icon id="globe" /> Dubai, United Arab Emirates</span>
           </div>
