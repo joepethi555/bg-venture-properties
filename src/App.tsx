@@ -213,6 +213,7 @@ export default function App() {
       { rootMargin: '-15% 0px -55% 0px', threshold: 0 },
     );
     NAV_ITEMS.forEach(({ href }) => {
+      if (!href) return;
       const el = document.querySelector(href);
       if (el) observer.observe(el);
     });
