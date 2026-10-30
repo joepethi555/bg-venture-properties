@@ -317,7 +317,10 @@ export default function App() {
       </header>
 
       <main id="main">
-        {route === '#/mission' || route === '#/vision' || route === '#/scope' || route === '#/mission-vision' ? (
+        {route.startsWith('#/search') ? (
+          <SearchPage onBack={() => { window.location.hash = '#home'; setRoute(''); }}
+            onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
+        ) : route === '#/mission' || route === '#/vision' || route === '#/scope' || route === '#/mission-vision' ? (
           <CompanyPage kind={route === '#/scope' ? 'scope' : route === '#/vision' ? 'vision' : 'mission'} tr={tr} L={L}
             onBack={() => { window.location.hash = '#home'; setRoute(''); }}
             onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
@@ -345,6 +348,7 @@ export default function App() {
               <span><Icon id="check" /> {tr ? L('hero.check1') : 'Local market expertise'}</span>
               <span><Icon id="check" /> {tr ? L('hero.check2') : 'International client support'}</span>
             </div>
+            <HeroSearch />
           </div>
           <div className="hero-side"><span>BASED IN DUBAI</span><i /><span>CONNECTED WORLDWIDE</span></div>
           <div className="hero-bottom container">
@@ -602,6 +606,117 @@ function ServiceCard({ n, icon, title, link, page, onPick, children }: { n: stri
         <a className="text-link" href="#contact" onClick={onPick}>{link} <Icon id="arrow" /></a>
       </div>
     </article>
+  );
+}
+
+const PROPERTY_TYPES = ['Offices', 'Villas', 'Apartments', 'Warehouses', 'Shops & Retail', 'Buildings', 'Commercial Units'];
+const COMMERCIAL_TYPES = ['Offices', 'Warehouses', 'Shops & Retail', 'Buildings', 'Commercial Units'];
+const NO_BEDROOM_TYPES = new Set(['Offices', 'Buildings', 'Warehouses', 'Shops & Retail', 'Commercial Units']);
+const LOCATIONS = ['Business Bay', 'Jumeirah Lake Towers (JLT)', 'Jumeirah Village Circle (JVC)', 'Al Furjan', 'Liwan'];
+const CITIES = ['Dubai'];
+const BEDROOMS = ['Studio', '1 Bedroom', '2 Bedrooms', '3 Bedrooms', '4 Bedrooms', '5 Bedrooms', '6+ Bedrooms'];
+
+function HeroSearch() {
+  const [purpose, setPurpose] = useState('all');
+  const [category, setCategory] = useState('');
+  const [location, setLocation] = useState('');
+  const [city, setCity] = useState('');
+  const [type, setType] = useState('');
+  const [bedrooms, setBedrooms] = useState('');
+  const bedEnabled = Boolean(type) && !NO_BEDROOM_TYPES.has(type);
+  const typeOptions = category === 'Residential' ? ['Apartments', 'Villas'] : category === 'Commercial' ? COMMERCIAL_TYPES : PROPERTY_TYPES;
+  const locations = city ? LOCATIONS.filter((l) => l !== '') : LOCATIONS; // all listed communities are in Dubai
+
+  const onType = (v: string) => {
+    setType(v);
+    if (NO_BEDROOM_TYPES.has(v) || !v) setBedrooms('');
+    if (v && COMMERCIAL_TYPES.includes(v)) setCategory('Commercial');
+    if ((v === 'Apartments' || v === 'Villas') && category === 'Commercial') setCategory('Residential');
+  };
+  const onCategory = (v: string) => {
+    setCategory(v);
+    if (v === 'Residential' && COMMERCIAL_TYPES.includes(type)) { setType(''); setBedrooms(''); }
+    if (v === 'Commercial' && (type === 'Apartments' || type === 'Villas')) { setType(''); setBedrooms(''); }
+  };
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = new URLSearchParams();
+    if (purpose !== 'all') q.set('purpose', purpose);
+    if (category) q.set('category', category);
+    if (location) q.set('location', location);
+    if (city) q.set('city', city);
+    if (type) q.set('type', type);
+    if (bedEnabled && bedrooms) q.set('bedrooms', bedrooms);
+    window.location.hash = `#/search${q.size ? `?${q}` : ''}`;
+  };
+
+  const sel = (id: string, label: string, value: string, options: string[], set: (v: string) => void, disabled = false) => (
+    <label className={`search-field${disabled ? ' is-disabled' : ''}`}>
+      <span>{label}</span>
+      <select aria-label={label} value={value} disabled={disabled} onChange={(e) => set(e.target.value)}>
+        <option value="">{id === 'location' ? 'Any location' : id === 'city' ? 'Any city' : `Any ${label.toLowerCase()}`}</option>
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </label>
+  );
+
+  return (
+    <form className="hero-search" onSubmit={submit} role="search" aria-label="Property search">
+      <div className="search-tabs" role="tablist" aria-label="Listing purpose">
+        {[['all', 'All'], ['rent', 'For Rent'], ['sale', 'For Sale']].map(([v, lbl]) => (
+          <button key={v} type="button" role="tab" aria-selected={purpose === v}
+            className={purpose === v ? 'active' : ''} onClick={() => setPurpose(v)}>{lbl}</button>
+        ))}
+      </div>
+      <div className="search-bar">
+        {sel('category', 'Category', category, ['Residential', 'Commercial'], onCategory)}
+        {sel('location', 'Location', location, locations, setLocation)}
+        {sel('city', 'City', city, CITIES, setCity)}
+        {sel('type', 'Property Type', type, typeOptions, onType)}
+        {sel('bedrooms', 'Bedrooms', bedrooms, BEDROOMS, setBedrooms, !bedEnabled)}
+        <button className="search-btn" type="submit"><Icon id="search" /> Search</button>
+      </div>
+    </form>
+  );
+}
+
+function SearchPage({ onBack, onEnquire }: { onBack: () => void; onEnquire: () => void }) {
+  const hash = window.location.hash.split('?')[1] || '';
+  const q = new URLSearchParams(hash);
+  const filters = [
+    ['Purpose', q.get('purpose') === 'rent' ? 'For Rent' : q.get('purpose') === 'sale' ? 'For Sale' : 'All'],
+    ['Category', q.get('category') || 'Any'],
+    ['Location', q.get('location') || 'Any'],
+    ['City', q.get('city') || 'Any'],
+    ['Property type', q.get('type') || 'Any'],
+    ['Bedrooms', q.get('bedrooms') || 'Any'],
+  ];
+  return (
+    <section className="service-page">
+      <div className="service-page-hero company-page-hero">
+        <img src="/dubai.jpg" alt="Dubai skyline" />
+        <div className="service-page-shade" />
+        <div className="container service-page-hero-content">
+          <p className="eyebrow">PROPERTY SEARCH</p>
+          <h1>Your search.<br /><em>Our portfolio.</em></h1>
+          <div className="service-page-actions">
+            <button className="button button-outline" type="button" onClick={onBack}>← Back to search</button>
+          </div>
+        </div>
+      </div>
+      <div className="container service-page-body">
+        <div className="section-heading centered"><p className="eyebrow">YOUR SELECTED FILTERS</p><h2>Tell us what<br /><em>you're looking for.</em></h2></div>
+        <div className="search-summary">
+          {filters.map(([k, v]) => <div className="search-summary-item" key={k}><span>{k}</span><strong>{v}</strong></div>)}
+        </div>
+        <div className="service-page-note"><Icon id="check" /><p>Our online property portal is launching soon. Share your filters with our team and we'll send you matching available properties directly.</p></div>
+        <div className="service-page-cta">
+          <h2>Get matching properties</h2>
+          <p>Send us your search — our team will respond with real, available options.</p>
+          <a className="button" href="#contact" onClick={onEnquire}>Send my search <Icon id="arrow" /></a>
+        </div>
+      </div>
+    </section>
   );
 }
 

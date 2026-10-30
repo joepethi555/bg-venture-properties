@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 
 export type IconId =
   | 'arrow' | 'up' | 'invest' | 'home' | 'office' | 'key'
-  | 'shield' | 'globe' | 'pin' | 'phone' | 'mail' | 'check';
+  | 'shield' | 'globe' | 'pin' | 'phone' | 'mail' | 'check' | 'search';
 
 const PATHS: Record<IconId, ReactNode> = {
   arrow: <path d="M4 12h15m-6-6 6 6-6 6" />,
@@ -17,6 +17,7 @@ const PATHS: Record<IconId, ReactNode> = {
   phone: <path d="m5 3 4 1 1 5-3 2c2 3 3 4 6 6l2-3 5 1 1 4c0 5-9 2-14-3S0 3 5 3Z" />,
   mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></>,
   check: <path d="m5 12 4 4L19 6" />,
+  search: <><circle cx="11" cy="11" r="7" /><path d="m21 21-4.35-4.35" /></>,
 };
 
 export default function Icon({ id, hidden = true }: { id: IconId; hidden?: boolean }) {
