@@ -6,6 +6,10 @@ import { existsSync } from 'node:fs';
 const root = dirname(fileURLToPath(import.meta.url));
 const dist = join(root, '..', 'dist');
 
+// The site currently sets no cookies or sessions. Any future cookie/session
+// must use these hardened defaults — pass them to every res.cookie() call.
+export const COOKIE_OPTIONS = { httpOnly: true, secure: true, sameSite: 'lax', path: '/' };
+
 export function createApp() {
   const app = express();
   app.disable('x-powered-by');
@@ -15,6 +19,9 @@ export function createApp() {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
     res.setHeader(
       'Content-Security-Policy',
       "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
