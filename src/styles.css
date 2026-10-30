@@ -647,3 +647,40 @@ footer { background: #141618; color: #a9adb2; position: relative; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* -- Published property listings (fed by the admin portal API) -- */
+.results-status { text-align: center; color: var(--muted); font-size: 14px; padding: 40px 20px; }
+.property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 26px; margin-top: 44px; }
+.property-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; text-decoration: none; color: var(--ink); transition: transform .25s, box-shadow .25s, border-color .25s; }
+.property-card:hover { transform: translateY(-4px); border-color: #d7bd83; box-shadow: 0 16px 44px #211b0c12; }
+.property-card-media { position: relative; aspect-ratio: 4/3; background: #ecedef; }
+.property-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.property-card-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+.property-card-tag { position: absolute; top: 12px; left: 12px; background: var(--dark); color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; padding: 6px 12px; border-radius: 20px; }
+.property-card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 7px; }
+.property-card-price { color: var(--gold-dark); font-size: 17px; font-weight: 700; }
+.property-card-body h3 { font: 600 15px var(--heading); margin: 0; line-height: 1.4; }
+.property-card-meta { margin: 0; font-size: 12px; color: var(--muted); }
+.property-card-loc { margin: 0; font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.property-card-loc .icon { width: 12px; height: 12px; color: var(--gold-dark); }
+.property-detail-title { font-size: clamp(30px, 4vw, 46px); margin: 10px 0 8px; }
+.property-detail .property-card-price { font-size: 22px; display: block; margin-bottom: 26px; }
+.property-gallery { margin-top: 24px; }
+.property-gallery-main { width: 100%; max-height: 560px; object-fit: cover; border-radius: 12px; display: block; background: #ecedef; cursor: zoom-in; }
+.property-gallery-thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; margin-top: 12px; }
+.property-gallery-thumbs button { padding: 0; border: 2px solid transparent; border-radius: 8px; overflow: hidden; cursor: pointer; background: none; }
+.property-gallery-thumbs button.active { border-color: var(--gold); }
+.property-gallery-thumbs img { width: 100%; height: 72px; object-fit: cover; display: block; }
+.property-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 46px; }
+.property-detail-grid h2 { font-size: 20px; margin: 26px 0 14px; }
+.property-detail-grid h2:first-child { margin-top: 0; }
+.property-specs { display: grid; grid-template-columns: auto 1fr; gap: 8px 24px; margin: 0; font-size: 13px; }
+.property-specs dt { color: var(--muted); font-weight: 550; }
+.property-specs dd { margin: 0; font-weight: 600; }
+.property-desc { font-size: 14px; line-height: 1.85; color: var(--muted); white-space: pre-line; }
+.property-amenities, .property-nearby { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; font-size: 13px; }
+.property-amenities li { display: flex; align-items: center; gap: 9px; font-weight: 550; }
+.property-amenities .icon { width: 14px; height: 14px; color: var(--gold-dark); }
+.property-nearby li { display: flex; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--line); padding-bottom: 9px; }
+.property-nearby span { color: var(--muted); font-size: 12px; }
+@media (max-width: 800px) { .property-detail-grid { grid-template-columns: 1fr; gap: 10px; } .property-gallery-main { max-height: 320px; } }

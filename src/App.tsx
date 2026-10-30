@@ -2,6 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import Icon, { IconId } from './components/Icon';
 import FloatingContactButtons from './components/FloatingContactButtons';
 import { t, Lang } from './i18n';
+import { fetchProperties, fetchProperty, imageUrl, formatPrice, formatArea, track, PublicProperty } from './properties';
 
 const EMAIL = 'admin@bgventureproperties.ae';
 const LANDLINE = '+971 4 580 9629';
@@ -317,7 +318,11 @@ export default function App() {
       </header>
 
       <main id="main">
-        {route.startsWith('#/search') ? (
+        {route.startsWith('#/property/') ? (
+          <PropertyPage id={route.slice('#/property/'.length).split('?')[0]}
+            onBack={() => { window.history.back(); }}
+            onEnquire={() => { window.location.hash = 'contact'; }} />
+        ) : route.startsWith('#/search') ? (
           <SearchPage onBack={() => { window.location.hash = '#home'; setRoute(''); }}
             onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
         ) : route === '#/mission' || route === '#/vision' || route === '#/scope' || route === '#/mission-vision' ? (
@@ -705,15 +710,123 @@ function SearchPage({ onBack, onEnquire }: { onBack: () => void; onEnquire: () =
         </div>
       </div>
       <div className="container service-page-body">
-        <div className="section-heading centered"><p className="eyebrow">YOUR SELECTED FILTERS</p><h2>Tell us what<br /><em>you're looking for.</em></h2></div>
+        <div className="section-heading centered"><p className="eyebrow">YOUR SELECTED FILTERS</p><h2>Available<br /><em>properties.</em></h2></div>
         <div className="search-summary">
           {filters.map(([k, v]) => <div className="search-summary-item" key={k}><span>{k}</span><strong>{v}</strong></div>)}
         </div>
-        <div className="service-page-note"><Icon id="check" /><p>Our online property portal is launching soon. Share your filters with our team and we'll send you matching available properties directly.</p></div>
+        <PropertyResults query={q} />
         <div className="service-page-cta">
-          <h2>Get matching properties</h2>
+          <h2>Can't find the right fit?</h2>
           <p>Send us your search — our team will respond with real, available options.</p>
           <a className="button" href="#contact" onClick={onEnquire}>Send my search <Icon id="arrow" /></a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PropertyResults({ query }: { query: URLSearchParams }) {
+  const [state, setState] = useState<'loading' | 'error' | 'done'>('loading');
+  const [items, setItems] = useState<PublicProperty[]>([]);
+  const key = query.toString();
+  useEffect(() => {
+    let live = true;
+    setState('loading');
+    fetchProperties(new URLSearchParams(key))
+      .then((p) => { if (!live) return; setItems(p); setState('done'); track('property_search'); p.forEach((x) => track('property_card_impression', x.id)); })
+      .catch(() => live && setState('error'));
+    return () => { live = false; };
+  }, [key]);
+  if (state === 'loading') return <p className="results-status">Loading available properties…</p>;
+  if (state === 'error') return <p className="results-status">Listings could not be loaded right now. Please send us your search below and we'll respond directly.</p>;
+  if (!items.length) return <p className="results-status">No published properties match these filters yet — send us your search and we'll shortlist off-market options for you.</p>;
+  return (
+    <div className="property-grid">
+      {items.map((p) => (
+        <a key={p.id} className="property-card" href={`#/property/${p.id}`} onClick={() => track('property_card_click', p.id)}>
+          <div className="property-card-media">
+            {p.cover_image_id
+              ? <img src={imageUrl(p.id, p.cover_image_id)} alt={p.title} loading="lazy" />
+              : <div className="property-card-placeholder"><Icon id="pin" /><span>{p.community || 'Dubai'}</span></div>}
+            <span className="property-card-tag">{p.listing_type === 'rent' ? 'For Rent' : p.listing_type === 'off_plan' ? 'Off-Plan' : 'For Sale'}</span>
+          </div>
+          <div className="property-card-body">
+            <strong className="property-card-price">{formatPrice(p)}</strong>
+            <h3>{p.title}</h3>
+            <p className="property-card-meta">
+              {[p.bedrooms && (p.bedrooms === 'Studio' ? 'Studio' : `${p.bedrooms} bed`), p.bathrooms && `${p.bathrooms} bath`, formatArea(p)].filter(Boolean).join(' · ')}
+            </p>
+            <p className="property-card-loc"><Icon id="pin" />{[p.building, p.community].filter(Boolean).join(', ') || 'Dubai'}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
+function PropertyPage({ id, onBack, onEnquire }: { id: string; onBack: () => void; onEnquire: () => void }) {
+  const [state, setState] = useState<'loading' | 'error' | 'done'>('loading');
+  const [data, setData] = useState<{ property: PublicProperty; images: { id: number; alt_text?: string | null; caption?: string | null }[]; details: { map_url?: string | null; amenities: string[]; nearby_places: { name: string; category: string; distance_metres?: number | null }[]; nearby_supermarkets?: string | null; nearby_facilities?: string | null } } | null>(null);
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    let live = true;
+    fetchProperty(id)
+      .then((d) => { if (!live) return; setData(d); setState('done'); track('property_detail_view', d.property.id); })
+      .catch(() => live && setState('error'));
+    return () => { live = false; };
+  }, [id]);
+  if (state === 'loading') return <section className="service-page"><div className="container service-page-body"><p className="results-status">Loading property…</p></div></section>;
+  if (state === 'error' || !data) return (
+    <section className="service-page"><div className="container service-page-body">
+      <p className="results-status">This listing is no longer available.</p>
+      <a className="button" href="#/search">Browse available properties</a>
+    </div></section>
+  );
+  const { property: p, images, details } = data;
+  const specs: [string, string][] = [
+    ['Reference', p.ref], ['Type', p.property_type], ['Purpose', p.listing_type === 'rent' ? 'For Rent' : p.listing_type === 'off_plan' ? 'Off-Plan' : 'For Sale'],
+    p.bedrooms ? ['Bedrooms', p.bedrooms] : null, p.bathrooms ? ['Bathrooms', String(p.bathrooms)] : null,
+    p.area_sqft ? ['Area', formatArea(p)] : null, p.furnishing ? ['Furnishing', p.furnishing] : null,
+    p.parking ? ['Parking', String(p.parking)] : null, p.view_type ? ['View', p.view_type] : null,
+    [p.building, p.community, p.city].filter(Boolean).join(', ') ? ['Location', [p.building, p.community, p.city].filter(Boolean).join(', ')] : null,
+  ].filter(Boolean) as [string, string][];
+  return (
+    <section className="service-page">
+      <div className="container service-page-body property-detail">
+        <button className="button button-outline" type="button" onClick={onBack}>← Back to results</button>
+        <p className="eyebrow" style={{ marginTop: 34 }}>{p.listing_type === 'rent' ? 'FOR RENT' : p.listing_type === 'off_plan' ? 'OFF-PLAN' : 'FOR SALE'} · REF {p.ref}</p>
+        <h1 className="property-detail-title">{p.title}</h1>
+        <strong className="property-card-price">{formatPrice(p)}</strong>
+        {images.length > 0 && (
+          <div className="property-gallery">
+            <img className="property-gallery-main" src={imageUrl(p.id, images[Math.min(active, images.length - 1)].id)} alt={images[Math.min(active, images.length - 1)].alt_text || p.title} onClick={() => track('property_gallery_interaction', p.id)} />
+            {images.length > 1 && (
+              <div className="property-gallery-thumbs">
+                {images.map((im, i) => (
+                  <button key={im.id} type="button" className={i === active ? 'active' : ''} onClick={() => { setActive(i); track('property_gallery_interaction', p.id); }}>
+                    <img src={imageUrl(p.id, im.id)} alt={im.alt_text || `${p.title} photo ${i + 1}`} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+        <div className="property-detail-grid">
+          <div>
+            <h2>Overview</h2>
+            <dl className="property-specs">{specs.map(([k, v]) => <Fragment key={k}><dt>{k}</dt><dd>{v}</dd></Fragment>)}</dl>
+            {details.amenities.length > 0 && (<><h2>Amenities</h2><ul className="property-amenities">{details.amenities.map((a) => <li key={a}><Icon id="check" />{a}</li>)}</ul></>)}
+          </div>
+          <div>
+            {p.description && (<><h2>Description</h2><p className="property-desc">{p.description}</p></>)}
+            {details.nearby_places.length > 0 && (<><h2>Nearby</h2><ul className="property-nearby">{details.nearby_places.map((n) => <li key={n.name}><strong>{n.name}</strong><span>{n.category}{n.distance_metres != null ? ` · ${n.distance_metres < 1000 ? Math.round(n.distance_metres) + ' m' : (n.distance_metres / 1000).toFixed(1) + ' km'}` : ''}</span></li>)}</ul></>)}
+            {details.map_url && (<p><a className="text-link" href={details.map_url} target="_blank" rel="noopener" onClick={() => track('map_open', p.id)}><Icon id="pin" /> View location on Google Maps</a></p>)}
+          </div>
+        </div>
+        <div className="service-page-cta">
+          <h2>Interested in this property?</h2>
+          <p>Reference {p.ref} — our team will confirm availability and arrange a viewing.</p>
+          <a className="button" href="#contact" onClick={() => { track('inquiry_button_click', p.id); onEnquire(); }}>Enquire about {p.ref} <Icon id="arrow" /></a>
         </div>
       </div>
     </section>
