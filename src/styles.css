@@ -117,8 +117,11 @@ nav { display: flex; align-items: center; gap: 27px; font-size: 11px; font-weigh
 .offer-card p { font-size: 12px; color: var(--muted); margin: 0; }
 .service-page-hero { position: relative; min-height: 620px; color: #fff; display: flex; align-items: flex-end; padding-bottom: 80px; }
 .offer-grid-3 { grid-template-columns: repeat(3, 1fr); }
-.company-purpose-grid { margin-top: 0; }
-.company-purpose-single { grid-template-columns: minmax(0, 680px); justify-content: center; }
+.company-purpose-grid { margin-top: 0; max-width: 1000px; margin-inline: auto; grid-template-columns: 1fr 1fr; align-items: stretch; }
+.company-purpose-grid .purpose-card { height: auto; display: flex; flex-direction: column; }
+@media (max-width: 700px) {
+  .company-purpose-grid { grid-template-columns: 1fr; gap: 18px; }
+}
 .company-page-hero { min-height: 500px; }
 .service-page-body .scope-block { margin-top: 50px; }
 @media (max-width: 900px) {

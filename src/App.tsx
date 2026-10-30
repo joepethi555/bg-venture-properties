@@ -675,8 +675,9 @@ function CompanyPage({ kind, tr, L, onBack, onEnquire }: { kind: 'mission' | 'vi
             </div>
           </>
         ) : (
-          <div className="purpose-grid company-purpose-grid company-purpose-single">
-            <div className="purpose-card"><span className="purpose-label">{tr ? L(isMission ? 'mission.label' : 'vision.label') : isMission ? 'OUR MISSION' : 'OUR VISION'}</span><p>{tr ? L(isMission ? 'mission.text' : 'vision.text') : isMission ? 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.' : 'To be the trusted Dubai property partner for investors worldwide — known for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
+          <div className="purpose-grid company-purpose-grid">
+            <div className="purpose-card"><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
+            <div className="purpose-card purpose-card-dark"><span className="purpose-label">{tr ? L('vision.label') : 'OUR VISION'}</span><p>{tr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — known for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
           </div>
         )}
         <div className="service-page-cta">
