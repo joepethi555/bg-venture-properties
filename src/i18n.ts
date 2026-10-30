@@ -3,6 +3,8 @@ export type Lang = 'en' | 'ar' | 'zh';
 const ar: Record<string, string> = {
   'nav.home': 'الرئيسية',
   'nav.company': 'شركتنا',
+  'nav.mv': 'مهمتنا ورؤيتنا',
+  'nav.scope': 'نطاق عملنا',
   'nav.expertise': 'خبراتنا',
   'nav.investors': 'المستثمرون الدوليون',
   'nav.contact': 'اتصل بنا',
@@ -133,6 +135,8 @@ const ar: Record<string, string> = {
 const zh: Record<string, string> = {
   'nav.home': '首页',
   'nav.company': '关于我们',
+  'nav.mv': '使命与愿景',
+  'nav.scope': '业务范围',
   'nav.expertise': '我们的专长',
   'nav.investors': '国际投资者',
   'nav.contact': '联系我们',

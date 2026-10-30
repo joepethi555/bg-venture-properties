@@ -95,9 +95,12 @@ const SLIDES = [
   { src: '/contract.jpg', label: 'Closing the deal' },
 ];
 
-const NAV_ITEMS = [
+const NAV_ITEMS: Array<{ href?: string; key: string; label: string; dropdown?: Array<{ href: string; key: string; label: string }> }> = [
   { href: '#home', key: 'nav.home', label: 'Home' },
-  { href: '#about', key: 'nav.company', label: 'Our company' },
+  { key: 'nav.company', label: 'Our company', dropdown: [
+    { href: '#mission-vision', key: 'nav.mv', label: 'Mission & Vision' },
+    { href: '#scope', key: 'nav.scope', label: 'Our Scope' },
+  ] },
   { href: '#services', key: 'nav.expertise', label: 'Our expertise' },
   { href: '#international', key: 'nav.investors', label: 'International investors' },
   { href: '#contact', key: 'nav.contact', label: 'Contact' },
@@ -269,7 +272,18 @@ export default function App() {
             <span>Menu</span><span className="menu-lines" aria-hidden="true" />
           </button>
           <nav id="navigation" className={menuOpen ? 'is-open' : ''} aria-label="Main navigation">
-            {NAV_ITEMS.map(({ href, key, label }) => (
+            {NAV_ITEMS.map(({ href, key, label, dropdown }) => dropdown ? (
+              <div key={key} className="nav-dropdown">
+                <button type="button" className="nav-link nav-dropdown-toggle" aria-haspopup="menu">
+                  {tr ? L(key) : label} <span className="dropdown-caret" aria-hidden="true">▾</span>
+                </button>
+                <div className="dropdown-menu" role="menu">
+                  {dropdown.map((d) => (
+                    <a key={d.href} href={d.href} role="menuitem" onClick={() => setMenuOpen(false)}>{tr ? L(d.key) : d.label}</a>
+                  ))}
+                </div>
+              </div>
+            ) : (
               <a key={href} className={`nav-link${activeSection === href ? ' active' : ''}`} href={href}
                 aria-current={activeSection === href ? 'location' : undefined}
                 onClick={() => setMenuOpen(false)}>
@@ -370,12 +384,12 @@ export default function App() {
               <div className="stat"><span>03 / OUR HOME MARKET</span><strong>Dubai<span>.</span></strong><h3>{tr ? L('stat3.h') : 'Local knowledge'}</h3><p>On-the-ground support in the UAE.</p></div>
               <div className="stat"><span>04 / OUR PERSPECTIVE</span><strong>Global<span>.</span></strong><h3>{tr ? L('stat4.h') : 'International clients'}</h3><p>Your location need not limit your search.</p></div>
             </div>
-            <div className="scope-block">
+            <div className="scope-block" id="scope">
               <p className="eyebrow scope-eyebrow"><i />{tr ? L('scope.eyebrow') : 'OUR SCOPE'}</p>
               <p className="scope-text">{tr ? <>{L('scope.a1')} <strong>BG Venture Properties</strong> {L('scope.a2')} <mark>{L('scope.m1')}</mark>{L('scope.a3')} <mark>{L('scope.m2')}</mark>{L('scope.a4')} <mark>{L('scope.m3')}</mark>{L('scope.a5')} <em>{L('scope.a6')}</em></> : <>We are <strong>BG Venture Properties</strong> — a Dubai real estate brokerage focused on three things: <mark>leasing property brokerage</mark>, <mark>buying &amp; selling brokerage</mark>, and <mark>real estate management supervision</mark>. For investors, landlords, businesses, and people looking for their next property, our role is simple: <em>understand what you need, help you find it, and support what comes next.</em></>}</p>
               <a className="text-link" href="#contact">{tr ? L('scope.link') : 'Get to know your property partner'} <Icon id="arrow" /></a>
             </div>
-            <div className="purpose-grid">
+            <div className="purpose-grid" id="mission-vision">
               <div className="purpose-card" data-tilt><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
               <div className="purpose-card purpose-card-dark" data-tilt><span className="purpose-label">{tr ? L('vision.label') : 'OUR VISION'}</span><p>{tr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — recognised for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
               <div className="purpose-values"><span><strong>Integrity</strong> in every recommendation</span><i /><span><strong>Clarity</strong> in every detail</span><i /><span><strong>Commitment</strong> beyond the transaction</span></div>
