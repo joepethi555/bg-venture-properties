@@ -118,6 +118,7 @@ nav { display: flex; align-items: center; gap: 27px; font-size: 11px; font-weigh
 .service-page-hero { position: relative; min-height: 620px; color: #fff; display: flex; align-items: flex-end; padding-bottom: 80px; }
 .offer-grid-3 { grid-template-columns: repeat(3, 1fr); }
 .company-purpose-grid { margin-top: 0; }
+.company-purpose-single { grid-template-columns: minmax(0, 680px); justify-content: center; }
 .company-page-hero { min-height: 500px; }
 .service-page-body .scope-block { margin-top: 50px; }
 @media (max-width: 900px) {

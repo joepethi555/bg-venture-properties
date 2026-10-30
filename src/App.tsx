@@ -98,7 +98,9 @@ const SLIDES = [
 const NAV_ITEMS: Array<{ href?: string; key: string; label: string; dropdown?: Array<{ href: string; key: string; label: string }> }> = [
   { href: '#home', key: 'nav.home', label: 'Home' },
   { key: 'nav.company', label: 'Our company', dropdown: [
-    { href: '#/mission-vision', key: 'nav.mv', label: 'Mission & Vision' },
+    { href: '#about', key: 'nav.about', label: 'About Us' },
+    { href: '#/mission', key: 'mission.label', label: 'Our Mission' },
+    { href: '#/vision', key: 'vision.label', label: 'Our Vision' },
     { href: '#/scope', key: 'nav.scope', label: 'Our Scope' },
   ] },
   { href: '#services', key: 'nav.expertise', label: 'Our expertise' },
@@ -315,8 +317,8 @@ export default function App() {
       </header>
 
       <main id="main">
-        {route === '#/mission-vision' || route === '#/scope' ? (
-          <CompanyPage kind={route === '#/scope' ? 'scope' : 'mv'} tr={tr} L={L}
+        {route === '#/mission' || route === '#/vision' || route === '#/scope' || route === '#/mission-vision' ? (
+          <CompanyPage kind={route === '#/scope' ? 'scope' : route === '#/vision' ? 'vision' : 'mission'} tr={tr} L={L}
             onBack={() => { window.location.hash = '#home'; setRoute(''); }}
             onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
         ) : route && SERVICE_PAGES[route] ? (
@@ -397,16 +399,7 @@ export default function App() {
               <div className="stat"><span>03 / OUR HOME MARKET</span><strong>Dubai<span>.</span></strong><h3>{tr ? L('stat3.h') : 'Local knowledge'}</h3><p>On-the-ground support in the UAE.</p></div>
               <div className="stat"><span>04 / OUR PERSPECTIVE</span><strong>Global<span>.</span></strong><h3>{tr ? L('stat4.h') : 'International clients'}</h3><p>Your location need not limit your search.</p></div>
             </div>
-            <div className="scope-block" id="scope">
-              <p className="eyebrow scope-eyebrow"><i />{tr ? L('scope.eyebrow') : 'OUR SCOPE'}</p>
-              <p className="scope-text">{tr ? <>{L('scope.a1')} <strong>BG Venture Properties</strong> {L('scope.a2')} <mark>{L('scope.m1')}</mark>{L('scope.a3')} <mark>{L('scope.m2')}</mark>{L('scope.a4')} <mark>{L('scope.m3')}</mark>{L('scope.a5')} <em>{L('scope.a6')}</em></> : <>We are <strong>BG Venture Properties</strong> — a Dubai real estate brokerage focused on three things: <mark>leasing property brokerage</mark>, <mark>buying &amp; selling brokerage</mark>, and <mark>real estate management supervision</mark>. For investors, landlords, businesses, and people looking for their next property, our role is simple: <em>understand what you need, help you find it, and support what comes next.</em></>}</p>
-              <a className="text-link" href="#contact">{tr ? L('scope.link') : 'Get to know your property partner'} <Icon id="arrow" /></a>
-            </div>
-            <div className="purpose-grid" id="mission-vision">
-              <div className="purpose-card" data-tilt><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
-              <div className="purpose-card purpose-card-dark" data-tilt><span className="purpose-label">{tr ? L('vision.label') : 'OUR VISION'}</span><p>{tr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — recognised for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
-              <div className="purpose-values"><span><strong>Integrity</strong> in every recommendation</span><i /><span><strong>Clarity</strong> in every detail</span><i /><span><strong>Commitment</strong> beyond the transaction</span></div>
-            </div>
+            {/* Mission, vision, and scope now live on dedicated pages — see the Our Company nav dropdown. */}
           </div>
         </section>
 
@@ -649,8 +642,9 @@ function ServicePage({ page, onBack, onEnquire }: { page: typeof SERVICE_PAGES[s
   );
 }
 
-function CompanyPage({ kind, tr, L, onBack, onEnquire }: { kind: 'mv' | 'scope'; tr: boolean; L: (k: string) => string; onBack: () => void; onEnquire: () => void }) {
+function CompanyPage({ kind, tr, L, onBack, onEnquire }: { kind: 'mission' | 'vision' | 'scope'; tr: boolean; L: (k: string) => string; onBack: () => void; onEnquire: () => void }) {
   const isScope = kind === 'scope';
+  const isMission = kind === 'mission';
   return (
     <section className="service-page">
       <div className="service-page-hero company-page-hero">
@@ -660,7 +654,7 @@ function CompanyPage({ kind, tr, L, onBack, onEnquire }: { kind: 'mv' | 'scope';
           <p className="eyebrow">{tr ? L('nav.company') : 'OUR COMPANY'}</p>
           <h1>{isScope
             ? (tr ? <>{L('scope.eyebrow')}<br /><em>{L('services.h2')}</em></> : <>Our scope.<br /><em>One trusted partner.</em></>)
-            : (tr ? <>{L('mission.label')}<br /><em>{L('vision.label')}</em></> : <>Our mission.<br /><em>Our vision.</em></>)}</h1>
+            : (tr ? <>{L(isMission ? 'mission.label' : 'vision.label')}<br /><em>{L('nav.company')}</em></> : isMission ? <>Our mission.<br /><em>Our company.</em></> : <>Our vision.<br /><em>Our company.</em></>)}</h1>
           <div className="service-page-actions">
             <a className="button" href="#contact" onClick={onEnquire}>{tr ? L('services.footerCta') : 'Talk to our team'} <Icon id="arrow" /></a>
             <button className="button button-outline" type="button" onClick={onBack}>← Back to home</button>
@@ -681,9 +675,8 @@ function CompanyPage({ kind, tr, L, onBack, onEnquire }: { kind: 'mv' | 'scope';
             </div>
           </>
         ) : (
-          <div className="purpose-grid company-purpose-grid">
-            <div className="purpose-card"><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
-            <div className="purpose-card"><span className="purpose-label">{tr ? L('vision.label') : 'OUR VISION'}</span><p>{tr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — known for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
+          <div className="purpose-grid company-purpose-grid company-purpose-single">
+            <div className="purpose-card"><span className="purpose-label">{tr ? L(isMission ? 'mission.label' : 'vision.label') : isMission ? 'OUR MISSION' : 'OUR VISION'}</span><p>{tr ? L(isMission ? 'mission.text' : 'vision.text') : isMission ? 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.' : 'To be the trusted Dubai property partner for investors worldwide — known for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
           </div>
         )}
         <div className="service-page-cta">
