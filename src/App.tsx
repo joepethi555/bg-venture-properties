@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Icon, { IconId } from './components/Icon';
 import { t, Lang } from './i18n';
 
@@ -238,7 +238,7 @@ export default function App() {
 
   const L = (key: string) => t(key, lang);
   const tr = lang !== 'en';
-  const cycleLang = () => setLang(lang === 'en' ? 'ar' : lang === 'ar' ? 'zh' : 'en');
+  const LANGS = [ { code: 'en', label: 'EN' }, { code: 'ar', label: 'عربي' }, { code: 'zh', label: '中文' } ] as const;
 
   return (
     <>
@@ -274,9 +274,14 @@ export default function App() {
                 {tr ? L(key) : label}
               </a>
             ))}
-            <button className="lang-toggle" type="button" aria-pressed={tr} aria-label="Switch language: English, Arabic, or Chinese" onClick={cycleLang}>
-              <span className={lang === 'en' ? 'lang-active' : ''}>EN</span><i /><span className={lang === 'ar' ? 'lang-active' : ''}>عربي</span><i /><span className={lang === 'zh' ? 'lang-active' : ''}>中文</span>
-            </button>
+            <div className="lang-toggle" role="group" aria-label="Choose website language">
+              {LANGS.map((l, i) => (
+                <Fragment key={l.code}>
+                  {i > 0 && <i />}
+                  <button type="button" className={lang === l.code ? 'lang-active' : ''} aria-pressed={lang === l.code} onClick={() => setLang(l.code)}>{l.label}</button>
+                </Fragment>
+              ))}
+            </div>
             <a className="button button-small" href="#contact" onClick={() => setMenuOpen(false)}>
               {tr ? L('nav.cta') : 'Speak to an expert'} <Icon id="up" />
             </a>

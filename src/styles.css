@@ -72,11 +72,12 @@ nav { display: flex; align-items: center; gap: 27px; font-size: 11px; font-weigh
 .nav-link::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width .2s; }
 .nav-link:hover::after, .nav-link.active::after { width: 100%; }
 .nav-link.active { color: var(--gold-dark); }
-.lang-toggle { display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--line); border-radius: 20px; padding: 7px 14px; font-size: 10px; font-weight: 600; color: var(--muted); }
+.lang-toggle { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 20px; padding: 6px 12px; font-size: 10px; }
 .lang-toggle i { width: 1px; height: 12px; background: var(--line); }
-.lang-toggle span { color: #b8b0a0; transition: color .2s; }
-.lang-toggle span.lang-active { color: var(--gold-dark); font-weight: 700; }
-.lang-toggle[aria-pressed="true"] { border-color: var(--gold); }
+.lang-toggle button { background: none; border: 0; padding: 2px 3px; font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .5px; color: #b8b0a0; cursor: pointer; transition: color .2s; }
+.lang-toggle button:hover { color: var(--gold-dark); }
+.lang-toggle button.lang-active { color: var(--gold-dark); font-weight: 700; border-bottom: 1.5px solid var(--gold); }
+.lang-toggle:has(.lang-active) { border-color: var(--gold); }
 .menu-toggle { display: none; }
 .hero { min-height: 710px; position: relative; color: white; overflow: hidden; background: #282927; }
 .hero-image, .hero-overlay { position: absolute; inset: 0; }
