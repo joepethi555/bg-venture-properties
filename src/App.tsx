@@ -375,6 +375,8 @@ export default function App() {
           </a>
         </section>
 
+        <FeaturedListings />
+
         <section className="dev-marquee-section" aria-label="UAE real estate developers we work with">
           <p className="dev-marquee-label"><span>PARTNERED WITH THE UAE’S LEADING DEVELOPERS</span></p>
           <div className="dev-marquee">
@@ -742,25 +744,50 @@ function PropertyResults({ query }: { query: URLSearchParams }) {
   if (!items.length) return <p className="results-status">No published properties match these filters yet — send us your search and we'll shortlist off-market options for you.</p>;
   return (
     <div className="property-grid">
-      {items.map((p) => (
-        <a key={p.id} className="property-card" href={`#/property/${p.id}`} onClick={() => track('property_card_click', p.id)}>
-          <div className="property-card-media">
-            {p.cover_image_id
-              ? <img src={imageUrl(p.id, p.cover_image_id)} alt={p.title} loading="lazy" />
-              : <div className="property-card-placeholder"><Icon id="pin" /><span>{p.community || 'Dubai'}</span></div>}
-            <span className="property-card-tag">{p.listing_type === 'rent' ? 'For Rent' : p.listing_type === 'off_plan' ? 'Off-Plan' : 'For Sale'}</span>
-          </div>
-          <div className="property-card-body">
-            <strong className="property-card-price">{formatPrice(p)}</strong>
-            <h3>{p.title}</h3>
-            <p className="property-card-meta">
-              {[p.bedrooms && (p.bedrooms === 'Studio' ? 'Studio' : `${p.bedrooms} bed`), p.bathrooms && `${p.bathrooms} bath`, formatArea(p)].filter(Boolean).join(' · ')}
-            </p>
-            <p className="property-card-loc"><Icon id="pin" />{[p.building, p.community].filter(Boolean).join(', ') || 'Dubai'}</p>
-          </div>
-        </a>
-      ))}
+      {items.map((p) => <PropertyCard key={p.id} p={p} />)}
     </div>
+  );
+}
+
+function PropertyCard({ p }: { p: PublicProperty }) {
+  return (
+    <a className="property-card" href={`#/property/${p.id}`} onClick={() => track('property_card_click', p.id)}>
+      <div className="property-card-media">
+        {p.cover_image_id
+          ? <img src={imageUrl(p.id, p.cover_image_id)} alt={p.title} loading="lazy" />
+          : <div className="property-card-placeholder"><Icon id="pin" /><span>{p.community || 'Dubai'}</span></div>}
+        <span className="property-card-tag">{p.listing_type === 'rent' ? 'For Rent' : p.listing_type === 'off_plan' ? 'Off-Plan' : 'For Sale'}</span>
+      </div>
+      <div className="property-card-body">
+        <strong className="property-card-price">{formatPrice(p)}</strong>
+        <h3>{p.title}</h3>
+        <p className="property-card-meta">
+          {[p.bedrooms && (p.bedrooms === 'Studio' ? 'Studio' : `${p.bedrooms} bed`), p.bathrooms && `${p.bathrooms} bath`, formatArea(p)].filter(Boolean).join(' · ')}
+        </p>
+        <p className="property-card-loc"><Icon id="pin" />{[p.building, p.community].filter(Boolean).join(', ') || 'Dubai'}</p>
+      </div>
+    </a>
+  );
+}
+
+function FeaturedListings() {
+  const [items, setItems] = useState<PublicProperty[]>([]);
+  useEffect(() => {
+    fetchProperties(new URLSearchParams())
+      .then((p) => { setItems(p.slice(0, 6)); p.slice(0, 6).forEach((x) => track('property_card_impression', x.id)); })
+      .catch(() => setItems([]));
+  }, []);
+  if (!items.length) return null;
+  return (
+    <section className="section container featured-listings" aria-label="Current property listings">
+      <div className="section-heading split">
+        <div><p className="eyebrow">CURRENT LISTINGS</p><h2>Properties we're<br /><em>representing.</em></h2></div>
+        <a className="text-link" href="#/search">Browse all listings <Icon id="arrow" /></a>
+      </div>
+      <div className="property-grid">
+        {items.map((p) => <PropertyCard key={p.id} p={p} />)}
+      </div>
+    </section>
   );
 }
 
