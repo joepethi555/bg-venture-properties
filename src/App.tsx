@@ -311,10 +311,7 @@ export default function App() {
             <p className="hero-description">
               {tr ? L('hero.desc') : 'A Dubai real estate brokerage built around you. Leasing, buying, selling, and management supervision—wherever you are in the world.'}
             </p>
-            <div className="hero-actions">
-              <a className="button" href="#contact">{tr ? L('hero.cta1') : 'Let’s discuss your goals'} <Icon id="arrow" /></a>
-              <a className="button button-outline" href="#services">{tr ? L('hero.cta2') : 'Explore our expertise'} <Icon id="up" /></a>
-            </div>
+            <div className="hero-actions hero-actions-future" />
             <div className="hero-assurance">
               <span><Icon id="check" /> {tr ? L('hero.check1') : 'Local market expertise'}</span>
               <span><Icon id="check" /> {tr ? L('hero.check2') : 'International client support'}</span>
