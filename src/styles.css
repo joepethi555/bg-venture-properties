@@ -15,6 +15,7 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 112px; }
+html, body { overflow-x: clip; }
 body { margin: 0; font: 14px/1.75 var(--body); color: var(--ink); background: #fff; }
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
@@ -81,7 +82,7 @@ nav { display: flex; align-items: center; gap: 27px; font-size: 11px; font-weigh
 .menu-toggle { display: none; }
 .hero { min-height: 710px; position: relative; color: white; overflow: hidden; background: #282927; }
 .hero-image, .hero-overlay { position: absolute; inset: 0; }
-.hero-image { object-position: center 47%; transform: scale(1.1) translate3d(calc(var(--px, 0) * 1px), calc(var(--py, 0) * 1px), 0); transition: transform .3s ease-out; }
+.hero-image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 47%; transform: scale(1.1) translate3d(calc(var(--px, 0) * 1px), calc(var(--py, 0) * 1px), 0); transition: transform .3s ease-out; }
 .hero-image-one { animation: none; }
 .hero-image-two { object-position: center 55%; opacity: 0; animation: hero-crossfade 24s ease-in-out infinite; }
 @keyframes hero-crossfade { 0%, 40% { opacity: 0; } 50%, 90% { opacity: 1; } 100% { opacity: 0; } }
