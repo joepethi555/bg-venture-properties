@@ -45,7 +45,7 @@ test('security headers are present', async () => {
 
 test('React source contains required content and translations', () => {
   const app = readFileSync(new URL('./src/App.tsx', import.meta.url), 'utf8');
-  for (const text of ['BG Venture Properties', 'Iris Bay Tower', 'admin@bgventureproperties.ae', '+971 52 154 3487', 'Returns are not guaranteed', 'Leasing property brokerage', 'Management supervision', '200', '5,000']) {
+  for (const text of ['BG Venture Properties', 'Regal Tower', 'admin@bgventureproperties.ae', '+971 52 154 3487', 'Returns are not guaranteed', 'Leasing property brokerage', 'Management supervision', '200', '5,000']) {
     assert.ok(app.includes(text), `Missing in App.tsx: ${text}`);
   }
   const i18n = readFileSync(new URL('./src/i18n.ts', import.meta.url), 'utf8');

@@ -40,7 +40,7 @@ All sections live in `src/App.tsx` and scroll through one landing page:
 10. **Landlords** — dark section with three service rows
 11. **Process** — 4-step "clear path forward"
 12. **FAQ** — animated accordion
-13. **Contact** — enquiry form + Google Maps embed (Office 1508, Iris Bay Tower)
+13. **Contact** — enquiry form + Google Maps embed (Offices 3101 &amp; 3104, Regal Tower)
 14. **Footer** — logo, nav columns, map
 
 ### Hash routing

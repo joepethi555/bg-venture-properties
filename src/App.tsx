@@ -249,7 +249,7 @@ export default function App() {
           <div className="ticker-track is-ready">
             {[0, 1].map((copy) => (
               <div className="ticker-group" key={copy} aria-hidden={copy === 1}>
-                <span><Icon id="pin" /> Iris Bay Tower, Dubai, UAE</span>
+                <span><Icon id="pin" /> Regal Tower, Business Bay, Dubai, UAE</span>
                 <a href={`mailto:${EMAIL}`} tabIndex={copy === 1 ? -1 : undefined}><Icon id="mail" /> {EMAIL}</a>
                 <a href={`tel:${LANDLINE_TEL}`} tabIndex={copy === 1 ? -1 : undefined}><Icon id="phone" /> {LANDLINE}</a>
               </div>
@@ -508,7 +508,7 @@ export default function App() {
                 <a href={`tel:${LANDLINE_TEL}`}><span className="contact-icon"><Icon id="phone" /></span><span><small>CALL OUR DUBAI OFFICE</small>{LANDLINE}</span></a>
                 <a href={`tel:${MOBILE_TEL}`}><span className="contact-icon"><Icon id="phone" /></span><span><small>MOBILE</small>{MOBILE}</span></a>
               </div>
-              <div className="office-address"><Icon id="pin" /><p><strong>Office 1508, Iris Bay Tower</strong><br />Business Bay, Dubai, United Arab Emirates</p></div>
+              <div className="office-address"><Icon id="pin" /><p><strong>Offices 3101 &amp; 3104, Regal Tower</strong><br />Business Bay, Dubai, United Arab Emirates</p></div>
             </div>
             <form id="enquiry-form" ref={formRef} className="enquiry-form" onSubmit={onSubmit}>
               <span className="form-eyebrow">A CONVERSATION IS A GOOD START</span>
@@ -555,8 +555,8 @@ export default function App() {
           <div><h3>Let’s connect</h3><a href={`tel:${LANDLINE_TEL}`}>{LANDLINE}</a><a href={`tel:${MOBILE_TEL}`}>{MOBILE}</a><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
         </div>
         <div className="container footer-map">
-          <div className="footer-map-label"><Icon id="pin" /><span>Office 1508, Iris Bay Tower · Business Bay, Dubai, UAE</span><a href="https://www.google.com/maps/search/?api=1&query=Iris+Bay+Tower+Business+Bay+Dubai" target="_blank" rel="noopener noreferrer">Open in Google Maps <Icon id="up" /></a></div>
-          <iframe title="BG Venture Properties office location — Iris Bay Tower, Business Bay, Dubai" src="https://www.google.com/maps?q=Iris%20Bay%20Tower%2C%20Business%20Bay%2C%20Dubai%2C%20UAE&z=16&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
+          <div className="footer-map-label"><Icon id="pin" /><span>Offices 3101 &amp; 3104, Regal Tower · Business Bay, Dubai, UAE</span><a href="https://www.google.com/maps/search/?api=1&query=Regal+Tower+Business+Bay+Dubai" target="_blank" rel="noopener noreferrer">Open in Google Maps <Icon id="up" /></a></div>
+          <iframe title="BG Venture Properties office location — Regal Tower, Business Bay, Dubai" src="https://www.google.com/maps?q=Regal%20Tower%2C%20Business%20Bay%2C%20Dubai%2C%20UAE&z=16&output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
         </div>
         <div className="container footer-bottom">
           <span>© {new Date().getFullYear()} BG Venture Properties. All rights reserved.</span>
