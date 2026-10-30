@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import Icon, { IconId } from './components/Icon';
+import FloatingContactButtons from './components/FloatingContactButtons';
 import { t, Lang } from './i18n';
 
 const EMAIL = 'admin@bgventureproperties.ae';
@@ -243,6 +244,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
+      <FloatingContactButtons />
 
       <div className="topbar" role="region" aria-label="Office contact details">
         <div className="ticker-viewport">
