@@ -54,6 +54,10 @@ p { margin-bottom: 20px; }
 .ticker-track { display: flex; width: 100%; }
 .ticker-track.is-ready { animation: none; }
 .ticker-group { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 100%; gap: 45px; padding: 8px 30px; }
+@media (max-width: 600px) {
+  .ticker-group { flex-wrap: wrap; gap: 4px 18px; padding: 7px 12px; row-gap: 3px; }
+  .topbar { font-size: 9px; min-height: 0; }
+}
 .ticker-group[aria-hidden="true"] { display: none; }
 .ticker-group > span, .ticker-group > a { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; font-weight: 700; }
 .topbar .icon { width: 13px; height: 13px; color: var(--gold); }
@@ -337,7 +341,7 @@ footer { background: #141618; color: #a9adb2; position: relative; }
 .footer-logo { width: 150px; height: auto; display: block; margin-bottom: 18px; }
 
 /* ── Floating contact widget ─────────────────────────── */
-.floating-contact { position: fixed; right: 20px; top: 60%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 950; }
+.floating-contact { position: fixed; left: auto; right: 20px; top: auto; bottom: 24px; display: flex; flex-direction: column; gap: 10px; z-index: 950; }
 .float-btn { position: relative; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; color: #fff; box-shadow: 0 6px 18px #0a2b1b45, 0 2px 6px #0003; transition: transform .22s ease, box-shadow .22s ease; }
 .float-btn svg { width: 28px; height: 28px; }
 .float-btn:hover { transform: scale(1.1); box-shadow: 0 10px 24px #0a2b1b55, 0 3px 8px #0004; }
@@ -345,7 +349,7 @@ footer { background: #141618; color: #a9adb2; position: relative; }
 .float-btn::after { content: attr(data-label); position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%); background: var(--dark); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .3px; white-space: nowrap; padding: 7px 11px; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
 .float-btn:hover::after, .float-btn:focus-visible::after { opacity: 1; }
 @media (max-width: 900px) {
-  .floating-contact { right: 12px; }
+  .floating-contact { right: 12px; bottom: 16px; }
   .float-btn { width: 50px; height: 50px; }
   .float-btn svg { width: 23px; height: 23px; }
   .float-btn::after { display: none; }
@@ -458,7 +462,10 @@ footer { background: #141618; color: #a9adb2; position: relative; }
   .topbar { font-size: 9px; }
   .hero { min-height: 665px; }
   .hero-content { padding-top: 66px; padding-bottom: 125px; }
-  h1 { font-size: 40px; letter-spacing: -1.8px; line-height: 1.13; margin-bottom: 23px; }
+  h1 { font-size: 32px; letter-spacing: -1.4px; line-height: 1.16; margin-bottom: 23px; }
+  .international-copy h2 { font-size: 30px; }
+  .footer-map-label, .footer-bottom { flex-wrap: wrap; }
+  .services-footer { flex-wrap: wrap; }
   .hero-eyebrow { font-size: 8px; letter-spacing: .8px; margin-bottom: 25px; }
   .hero-description { font-size: 12px; max-width: 380px; line-height: 1.9; }
   .hero-overlay { background: linear-gradient(90deg, #090d12db, #11141672), linear-gradient(0deg, #111416cf, transparent 65%); }
