@@ -98,8 +98,8 @@ const SLIDES = [
 const NAV_ITEMS: Array<{ href?: string; key: string; label: string; dropdown?: Array<{ href: string; key: string; label: string }> }> = [
   { href: '#home', key: 'nav.home', label: 'Home' },
   { key: 'nav.company', label: 'Our company', dropdown: [
-    { href: '#mission-vision', key: 'nav.mv', label: 'Mission & Vision' },
-    { href: '#scope', key: 'nav.scope', label: 'Our Scope' },
+    { href: '#/mission-vision', key: 'nav.mv', label: 'Mission & Vision' },
+    { href: '#/scope', key: 'nav.scope', label: 'Our Scope' },
   ] },
   { href: '#services', key: 'nav.expertise', label: 'Our expertise' },
   { href: '#international', key: 'nav.investors', label: 'International investors' },
@@ -135,15 +135,23 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('#home');
   const [status, setStatus] = useState('');
   const [route, setRoute] = useState('');
+  const [dropOpen, setDropOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useReveal();
 
   useEffect(() => {
+    if (!dropOpen) return;
+    const close = (e: MouseEvent) => { if (!(e.target as HTMLElement).closest('.nav-dropdown')) setDropOpen(false); };
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [dropOpen]);
+
+  useEffect(() => {
     const onHash = () => {
       const h = window.location.hash;
-      if (h.startsWith('#/service-')) {
+      if (h.startsWith('#/')) {
         setRoute(h);
         window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
       } else if (route) setRoute('');
@@ -274,8 +282,8 @@ export default function App() {
           </button>
           <nav id="navigation" className={menuOpen ? 'is-open' : ''} aria-label="Main navigation">
             {NAV_ITEMS.map(({ href, key, label, dropdown }) => dropdown ? (
-              <div key={key} className="nav-dropdown">
-                <button type="button" className="nav-link nav-dropdown-toggle" aria-haspopup="menu">
+              <div key={key} className={`nav-dropdown${dropOpen ? ' open' : ''}`}>
+                <button type="button" className="nav-link nav-dropdown-toggle" aria-haspopup="menu" aria-expanded={dropOpen} onClick={() => setDropOpen((o) => !o)}>
                   {tr ? L(key) : label} <span className="dropdown-caret" aria-hidden="true">▾</span>
                 </button>
                 <div className="dropdown-menu" role="menu">
@@ -307,7 +315,11 @@ export default function App() {
       </header>
 
       <main id="main">
-        {route && SERVICE_PAGES[route] ? (
+        {route === '#/mission-vision' || route === '#/scope' ? (
+          <CompanyPage kind={route === '#/scope' ? 'scope' : 'mv'} tr={tr} L={L}
+            onBack={() => { window.location.hash = '#home'; setRoute(''); }}
+            onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
+        ) : route && SERVICE_PAGES[route] ? (
           <ServicePage page={SERVICE_PAGES[route]}
             onBack={() => { window.location.hash = '#home'; setRoute(''); }}
             onEnquire={() => { setRoute(''); window.location.hash = 'contact'; }} />
@@ -631,6 +643,53 @@ function ServicePage({ page, onBack, onEnquire }: { page: typeof SERVICE_PAGES[s
           <h2>Ready to talk it through?</h2>
           <p>Tell us what you need — we’ll show you the right next step.</p>
           <a className="button" href="#contact" onClick={onEnquire}>Speak to our team <Icon id="arrow" /></a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CompanyPage({ kind, tr, L, onBack, onEnquire }: { kind: 'mv' | 'scope'; tr: boolean; L: (k: string) => string; onBack: () => void; onEnquire: () => void }) {
+  const isScope = kind === 'scope';
+  return (
+    <section className="service-page">
+      <div className="service-page-hero company-page-hero">
+        <img src="/skyline.jpg" alt="Dubai skyline" />
+        <div className="service-page-shade" />
+        <div className="container service-page-hero-content">
+          <p className="eyebrow">{tr ? L('nav.company') : 'OUR COMPANY'}</p>
+          <h1>{isScope
+            ? (tr ? <>{L('scope.eyebrow')}<br /><em>{L('services.h2')}</em></> : <>Our scope.<br /><em>One trusted partner.</em></>)
+            : (tr ? <>{L('mission.label')}<br /><em>{L('vision.label')}</em></> : <>Our mission.<br /><em>Our vision.</em></>)}</h1>
+          <div className="service-page-actions">
+            <a className="button" href="#contact" onClick={onEnquire}>{tr ? L('services.footerCta') : 'Talk to our team'} <Icon id="arrow" /></a>
+            <button className="button button-outline" type="button" onClick={onBack}>← Back to home</button>
+          </div>
+        </div>
+      </div>
+      <div className="container service-page-body">
+        {isScope ? (
+          <>
+            <div className="section-heading centered"><p className="eyebrow">{tr ? L('services.eyebrow') : 'OUR SERVICES'}</p><h2>{tr ? <>{L('services.h1')}<br /><em>{L('services.h2')}</em></> : <>Three core services.<br /><em>One trusted partner.</em></>}</h2></div>
+            <div className="offer-grid offer-grid-3">
+              <article className="offer-card"><span className="offer-num">01</span><h3>{tr ? L('svc1.h') : 'Leasing property brokerage'}</h3><p>{tr ? L('svc1.p') : 'We connect landlords with prospective tenants and help tenants find the right home, office, or commercial space.'}</p></article>
+              <article className="offer-card"><span className="offer-num">02</span><h3>{tr ? L('svc2.h') : 'Buying & selling brokerage'}</h3><p>{tr ? L('svc2.p') : 'Find the right property or connect yours with prospective buyers — including investment property opportunities.'}</p></article>
+              <article className="offer-card"><span className="offer-num">03</span><h3>{tr ? L('svc3.h') : 'Real estate management supervision'}</h3><p>{tr ? L('svc3.p') : 'Ongoing support for your Dubai property — scope, responsibilities, and communication agreed from the start.'}</p></article>
+            </div>
+            <div className="scope-block">
+              <p className="scope-text">{tr ? <>{L('scope.a1')} <strong>BG Venture Properties</strong> {L('scope.a2')} <mark>{L('scope.m1')}</mark>{L('scope.a3')} <mark>{L('scope.m2')}</mark>{L('scope.a4')} <mark>{L('scope.m3')}</mark>{L('scope.a5')} <em>{L('scope.a6')}</em></> : <>We are <strong>BG Venture Properties</strong> — a Dubai real estate brokerage focused on three things: <mark>leasing property brokerage</mark>, <mark>buying &amp; selling brokerage</mark>, and <mark>real estate management supervision</mark>. For investors, landlords, businesses, and people looking for their next property, our role is simple: <em>understand what you need, help you find it, and support what comes next.</em></>}</p>
+            </div>
+          </>
+        ) : (
+          <div className="purpose-grid company-purpose-grid">
+            <div className="purpose-card"><span className="purpose-label">{tr ? L('mission.label') : 'OUR MISSION'}</span><p>{tr ? L('mission.text') : 'To connect investors, landlords, and businesses with the right Dubai property opportunities — through clear advice, disciplined service, and support that continues beyond the transaction.'}</p></div>
+            <div className="purpose-card"><span className="purpose-label">{tr ? L('vision.label') : 'OUR VISION'}</span><p>{tr ? L('vision.text') : 'To be the trusted Dubai property partner for investors worldwide — known for clarity, integrity, and the confidence we bring to every property decision.'}</p></div>
+          </div>
+        )}
+        <div className="service-page-cta">
+          <h2>{tr ? L('services.footerH') : 'Not sure where to start?'}</h2>
+          <p>{tr ? L('services.footerP') : 'Tell us your goals. We’ll help you identify the right next step.'}</p>
+          <a className="button" href="#contact" onClick={onEnquire}>{tr ? L('services.footerCta') : 'Talk to our team'} <Icon id="arrow" /></a>
         </div>
       </div>
     </section>
