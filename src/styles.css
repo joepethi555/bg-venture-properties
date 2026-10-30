@@ -684,3 +684,13 @@ footer { background: #141618; color: #a9adb2; position: relative; }
 .property-nearby li { display: flex; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--line); padding-bottom: 9px; }
 .property-nearby span { color: var(--muted); font-size: 12px; }
 @media (max-width: 800px) { .property-detail-grid { grid-template-columns: 1fr; gap: 10px; } .property-gallery-main { max-height: 320px; } }
+
+/* Compact featured-listings cards: six fit two tidy rows on desktop */
+.featured-listings .property-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 30px; }
+.featured-listings .property-card-media { aspect-ratio: 16/10; }
+.featured-listings .property-card-body { padding: 14px 16px 15px; gap: 5px; }
+.featured-listings .property-card-body h3 { font-size: 13px; }
+.featured-listings .property-card-price { font-size: 15px; }
+.featured-listings .property-card-meta { font-size: 11px; }
+@media (max-width: 900px) { .featured-listings .property-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .featured-listings .property-grid { grid-template-columns: 1fr; } }
