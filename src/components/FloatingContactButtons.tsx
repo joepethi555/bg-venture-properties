@@ -62,7 +62,7 @@ const BUTTONS: FloatButton[] = [
 
 export default function FloatingContactButtons() {
   return (
-    <nav className="floating-contact" aria-label="Quick contact options">
+    <div className="floating-contact" role="complementary" aria-label="Quick contact options">
       {BUTTONS.map((b) => (
         <a
           key={b.href}
@@ -76,6 +76,6 @@ export default function FloatingContactButtons() {
           {b.icon}
         </a>
       ))}
-    </nav>
+    </div>
   );
 }
