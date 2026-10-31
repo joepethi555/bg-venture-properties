@@ -1,5 +1,48 @@
 [
  {
+  "ref": "BGVS-0160",
+  "slug": "impressive-5-bedroom-modern-arabic-villa-deira-bgvs-0160",
+  "title": "Impressive 5-bedroom villa, Golf Place 1, Dubai Hills Estate",
+  "purpose": "rent",
+  "category": "villa",
+  "type_label": "Villa",
+  "price": 935000,
+  "currency": "AED",
+  "rent_period": "yr",
+  "location": "Dubai Hills Estate",
+  "city": "Dubai",
+  "bedrooms": 5,
+  "bathrooms": 7,
+  "size_sqft": 7362,
+  "units": null,
+  "furnishing": "Partly furnished",
+  "parking": 2,
+  "description": "Available for lease: a villa in Dubai Hills Estate, Set on a generous plot with landscaped outdoor space.. Ready for immediate occupancy — enquire to arrange a viewing. Contact BG Venture Properties to arrange a viewing or request further details.",
+  "amenities": [
+   "Majlis",
+   "Private pool",
+   "Gated community",
+   "Maids room",
+   "Built-in wardrobes"
+  ],
+  "images": [
+   "/img/villa/golfplace-01.jpg",
+   "/img/villa/golfplace-02.jpg",
+   "/img/villa/golfplace-03.png",
+   "/img/villa/golfplace-04.png"
+  ],
+  "featured": true,
+  "availability": "Available",
+  "date_added": "2026-10-31",
+  "agent": {
+   "name": "BG Venture Properties — Leasing Team",
+   "phone": "+971 4 580 9629",
+   "email": "admin@bgventureproperties.ae"
+  },
+  "sample": true,
+  "building": "Golf Place 1"
+ },
+ {
   "ref": "BGVS-0001",
   "slug": "executive-2-bedroom-apartment-mag-218-mirdif-bgvs-0001",
   "title": "Executive 2-bedroom apartment, Mag 218, Mirdif",
@@ -7085,49 +7128,6 @@
    "email": "admin@bgventureproperties.ae"
   },
   "sample": true
- },
- {
-  "ref": "BGVS-0160",
-  "slug": "impressive-5-bedroom-modern-arabic-villa-deira-bgvs-0160",
-  "title": "Impressive 5-bedroom villa, Golf Place 1, Dubai Hills Estate",
-  "purpose": "rent",
-  "category": "villa",
-  "type_label": "Villa",
-  "price": 935000,
-  "currency": "AED",
-  "rent_period": "yr",
-  "location": "Dubai Hills Estate",
-  "city": "Dubai",
-  "bedrooms": 5,
-  "bathrooms": 7,
-  "size_sqft": 7362,
-  "units": null,
-  "furnishing": "Partly furnished",
-  "parking": 2,
-  "description": "Available for lease: a villa in Dubai Hills Estate, Set on a generous plot with landscaped outdoor space.. Ready for immediate occupancy — enquire to arrange a viewing. Contact BG Venture Properties to arrange a viewing or request further details.",
-  "amenities": [
-   "Majlis",
-   "Private pool",
-   "Gated community",
-   "Maids room",
-   "Built-in wardrobes"
-  ],
-  "images": [
-   "/img/villa/golfplace-01.jpg",
-   "/img/villa/golfplace-02.jpg",
-   "/img/villa/golfplace-03.png",
-   "/img/villa/golfplace-04.png"
-  ],
-  "featured": false,
-  "availability": "Available",
-  "date_added": "2026-10-16",
-  "agent": {
-   "name": "BG Venture Properties — Leasing Team",
-   "phone": "+971 4 580 9629",
-   "email": "admin@bgventureproperties.ae"
-  },
-  "sample": true,
-  "building": "Golf Place 1"
  },
  {
   "ref": "BGVS-0161",
