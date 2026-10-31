@@ -41,20 +41,20 @@ const BUTTONS: FloatButton[] = [
   {
     label: 'Call our Dubai office',
     href: `tel:${CONTACT.officePhone}`,
-    bg: '#00D98B',
+    bg: '#16233a',
     icon: phoneIcon,
   },
   {
     label: 'Chat with us on WhatsApp',
     href: `https://wa.me/${CONTACT.whatsappNumber}?text=${encodeURIComponent(CONTACT.whatsappMessage)}`,
-    bg: '#25D366',
+    bg: '#1fa855',
     external: true,
     icon: whatsappIcon,
   },
   {
     label: 'Find our office on Google Maps',
     href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.mapsQuery)}`,
-    bg: '#2FA866',
+    bg: '#96793a',
     external: true,
     icon: pinIcon,
   },
