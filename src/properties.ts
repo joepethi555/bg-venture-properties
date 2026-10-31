@@ -83,7 +83,14 @@ export async function fetchProperties(q: URLSearchParams): Promise<PublicPropert
   const purpose = q.get('purpose');
   if (purpose === 'rent' || purpose === 'sale') api.set('purpose', purpose);
   if (q.get('category')) api.set('category', q.get('category')!);
-  if (q.get('location')) api.set('community', q.get('location')!);
+  const location = q.get('location');
+  const communities: Record<string, string> = {
+    'Jumeirah Lake Towers (JLT)': 'Jumeirah Lake Towers',
+    JLT: 'Jumeirah Lake Towers',
+    'Jumeirah Village Circle (JVC)': 'Jumeirah Village Circle',
+    JVC: 'Jumeirah Village Circle',
+  };
+  if (location) api.set('community', communities[location] || location);
   if (q.get('city')) api.set('city', q.get('city')!);
   const t = q.get('type');
   if (t && TYPE_MAP[t]) api.set('type', TYPE_MAP[t]);

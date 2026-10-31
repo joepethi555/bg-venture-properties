@@ -617,43 +617,18 @@ function ServiceCard({ n, icon, title, link, page, onPick, children }: { n: stri
 }
 
 const PROPERTY_TYPES = ['Offices', 'Villas', 'Apartments', 'Warehouses', 'Shops & Retail', 'Buildings', 'Commercial Units'];
-const COMMERCIAL_TYPES = ['Offices', 'Warehouses', 'Shops & Retail', 'Buildings', 'Commercial Units'];
-const NO_BEDROOM_TYPES = new Set(['Offices', 'Buildings', 'Warehouses', 'Shops & Retail', 'Commercial Units']);
+
 const LOCATIONS = ['Business Bay', 'Jumeirah Lake Towers (JLT)', 'Jumeirah Village Circle (JVC)', 'Al Furjan', 'Liwan'];
-const CITIES = ['Dubai'];
-const BEDROOMS = ['Studio', '1 Bedroom', '2 Bedrooms', '3 Bedrooms', '4 Bedrooms', '5 Bedrooms', '6+ Bedrooms'];
+
 
 function HeroSearch() {
-  const [purpose, setPurpose] = useState('all');
-  const [category, setCategory] = useState('');
   const [location, setLocation] = useState('');
-  const [city, setCity] = useState('');
   const [type, setType] = useState('');
-  const [bedrooms, setBedrooms] = useState('');
-  const bedEnabled = Boolean(type) && !NO_BEDROOM_TYPES.has(type);
-  const typeOptions = category === 'Residential' ? ['Apartments', 'Villas'] : category === 'Commercial' ? COMMERCIAL_TYPES : PROPERTY_TYPES;
-  const locations = city ? LOCATIONS.filter((l) => l !== '') : LOCATIONS; // all listed communities are in Dubai
-
-  const onType = (v: string) => {
-    setType(v);
-    if (NO_BEDROOM_TYPES.has(v) || !v) setBedrooms('');
-    if (v && COMMERCIAL_TYPES.includes(v)) setCategory('Commercial');
-    if ((v === 'Apartments' || v === 'Villas') && category === 'Commercial') setCategory('Residential');
-  };
-  const onCategory = (v: string) => {
-    setCategory(v);
-    if (v === 'Residential' && COMMERCIAL_TYPES.includes(type)) { setType(''); setBedrooms(''); }
-    if (v === 'Commercial' && (type === 'Apartments' || type === 'Villas')) { setType(''); setBedrooms(''); }
-  };
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const q = new URLSearchParams();
-    if (purpose !== 'all') q.set('purpose', purpose);
-    if (category) q.set('category', category);
     if (location) q.set('location', location);
-    if (city) q.set('city', city);
     if (type) q.set('type', type);
-    if (bedEnabled && bedrooms) q.set('bedrooms', bedrooms);
     window.location.hash = `#/search${q.size ? `?${q}` : ''}`;
   };
 
@@ -668,20 +643,11 @@ function HeroSearch() {
   );
 
   return (
-    <form className="hero-search" onSubmit={submit} role="search" aria-label="Property search">
-      <div className="search-tabs" role="tablist" aria-label="Listing purpose">
-        {[['all', 'All'], ['rent', 'For Rent'], ['sale', 'For Sale']].map(([v, lbl]) => (
-          <button key={v} type="button" role="tab" aria-selected={purpose === v}
-            className={purpose === v ? 'active' : ''} onClick={() => setPurpose(v)}>{lbl}</button>
-        ))}
-      </div>
+    <form className="hero-search simple-search" onSubmit={submit} role="search" aria-label="Property search">
       <div className="search-bar">
-        {sel('category', 'Category', category, ['Residential', 'Commercial'], onCategory)}
-        {sel('location', 'Location', location, locations, setLocation)}
-        {sel('city', 'City', city, CITIES, setCity)}
-        {sel('type', 'Property Type', type, typeOptions, onType)}
-        {sel('bedrooms', 'Bedrooms', bedrooms, BEDROOMS, setBedrooms, !bedEnabled)}
-        <button className="search-btn" type="submit"><Icon id="search" /> Search</button>
+        {sel('location', 'Location', location, LOCATIONS, setLocation)}
+        {sel('type', 'Property Type', type, PROPERTY_TYPES, setType)}
+        <button className="search-btn" type="submit" aria-label="Search properties"><Icon id="search" /></button>
       </div>
     </form>
   );
@@ -690,16 +656,8 @@ function HeroSearch() {
 function SearchPage({ onBack, onEnquire }: { onBack: () => void; onEnquire: () => void }) {
   const hash = window.location.hash.split('?')[1] || '';
   const q = new URLSearchParams(hash);
-  const filters = [
-    ['Purpose', q.get('purpose') === 'rent' ? 'For Rent' : q.get('purpose') === 'sale' ? 'For Sale' : 'All'],
-    ['Category', q.get('category') || 'Any'],
-    ['Location', q.get('location') || 'Any'],
-    ['City', q.get('city') || 'Any'],
-    ['Property type', q.get('type') || 'Any'],
-    ['Bedrooms', q.get('bedrooms') || 'Any'],
-  ];
   return (
-    <section className="service-page">
+    <section className="service-page search-results-page">
       <div className="service-page-hero company-page-hero">
         <img src="/dubai.jpg" alt="Dubai skyline" />
         <div className="service-page-shade" />
@@ -712,10 +670,7 @@ function SearchPage({ onBack, onEnquire }: { onBack: () => void; onEnquire: () =
         </div>
       </div>
       <div className="container service-page-body">
-        <div className="section-heading centered"><p className="eyebrow">YOUR SELECTED FILTERS</p><h2>Available<br /><em>properties.</em></h2></div>
-        <div className="search-summary">
-          {filters.map(([k, v]) => <div className="search-summary-item" key={k}><span>{k}</span><strong>{v}</strong></div>)}
-        </div>
+        <div className="section-heading centered"><h2>Available <em>properties.</em></h2></div>
         <PropertyResults query={q} />
         <div className="service-page-cta">
           <h2>Can't find the right fit?</h2>
@@ -772,11 +727,46 @@ function PropertyCard({ p }: { p: PublicProperty }) {
 
 function FeaturedListings() {
   const [items, setItems] = useState<PublicProperty[]>([]);
+  const rail = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState(0);
+  const [atEnd, setAtEnd] = useState(false);
+  const measure = () => {
+    const el = rail.current;
+    if (!el || !el.children.length) return;
+    const left = el.getBoundingClientRect().left;
+    const distances = Array.from(el.children).map(child => Math.abs(child.getBoundingClientRect().left - left));
+    setPosition(distances.indexOf(Math.min(...distances)));
+    setAtEnd(Math.abs(el.scrollLeft) + el.clientWidth >= el.scrollWidth - 4);
+  };
+  const move = (direction: number) => {
+    const el = rail.current;
+    if (!el) return;
+    const next = Math.max(0, Math.min(items.length - 1, position + direction));
+    (el.children[next] as HTMLElement)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest', inline: 'start' });
+  };
   useEffect(() => {
+    let live = true;
     fetchProperties(new URLSearchParams())
-      .then((p) => { setItems(p.slice(0, 6)); p.slice(0, 6).forEach((x) => track('property_card_impression', x.id)); })
-      .catch(() => setItems([]));
+      .then(p => { if (live) setItems(p); })
+      .catch(() => { if (live) setItems([]); });
+    return () => { live = false; };
   }, []);
+  useEffect(() => {
+    const el = rail.current;
+    if (!el) return;
+    const resize = new ResizeObserver(measure);
+    resize.observe(el);
+    const seen = new Set<string>();
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) if (entry.isIntersecting && !seen.has(entry.target.id)) {
+        seen.add(entry.target.id);
+        track('property_card_impression', Number((entry.target as HTMLElement).dataset.propertyId));
+      }
+    }, { threshold: .5 });
+    Array.from(el.children).forEach(child => observer.observe(child));
+    measure();
+    return () => { resize.disconnect(); observer.disconnect(); };
+  }, [items]);
   if (!items.length) return null;
   return (
     <section className="section container featured-listings" aria-label="Current property listings">
@@ -784,8 +774,16 @@ function FeaturedListings() {
         <div><p className="eyebrow">CURRENT LISTINGS</p><h2>Properties we're<br /><em>representing.</em></h2></div>
         <a className="text-link" href="#/search">Browse all listings <Icon id="arrow" /></a>
       </div>
-      <div className="property-grid">
-        {items.map((p) => <PropertyCard key={p.id} p={p} />)}
+      <div className="carousel-toolbar">
+        <span role="status" aria-live="polite">{position + 1} / {items.length} properties</span>
+        <div className="carousel-arrows">
+          <button type="button" aria-label="Previous properties" aria-controls="featured-property-track" disabled={position === 0} onClick={() => move(-1)}>←</button>
+          <button type="button" aria-label="Next properties" aria-controls="featured-property-track" disabled={atEnd} onClick={() => move(1)}>→</button>
+        </div>
+      </div>
+      <div id="featured-property-track" className="property-carousel" ref={rail} onScroll={measure} role="region" aria-roledescription="carousel" aria-label="Available properties" tabIndex={0}
+        onKeyDown={e => { if (e.target === e.currentTarget && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) { e.preventDefault(); move(e.key === 'ArrowRight' ? 1 : -1); } }}>
+        {items.map((p, i) => <div className="property-slide" id={`featured-property-${p.id}`} data-property-id={p.id} key={p.id} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${items.length}`}><PropertyCard p={p} /></div>)}
       </div>
     </section>
   );
@@ -824,20 +822,35 @@ function PropertyPage({ id, onBack, onEnquire }: { id: string; onBack: () => voi
         <p className="eyebrow" style={{ marginTop: 34 }}>{p.listing_type === 'rent' ? 'FOR RENT' : p.listing_type === 'off_plan' ? 'OFF-PLAN' : 'FOR SALE'} · REF {p.ref}</p>
         <h1 className="property-detail-title">{p.title}</h1>
         <strong className="property-card-price">{formatPrice(p)}</strong>
-        {images.length > 0 && (
-          <div className="property-gallery">
-            <img className="property-gallery-main" src={imageUrl(p.id, images[Math.min(active, images.length - 1)].id)} alt={images[Math.min(active, images.length - 1)].alt_text || p.title} onClick={() => track('property_gallery_interaction', p.id)} />
-            {images.length > 1 && (
-              <div className="property-gallery-thumbs">
-                {images.map((im, i) => (
-                  <button key={im.id} type="button" className={i === active ? 'active' : ''} onClick={() => { setActive(i); track('property_gallery_interaction', p.id); }}>
-                    <img src={imageUrl(p.id, im.id)} alt={im.alt_text || `${p.title} photo ${i + 1}`} loading="lazy" />
-                  </button>
-                ))}
+        {images.length > 0 && (() => {
+          const idx = Math.min(active, images.length - 1);
+          const go = (d: number) => { setActive((idx + d + images.length) % images.length); track('property_gallery_interaction', p.id); };
+          return (
+            <div className="property-gallery">
+              <div className="gallery-stage"
+                onTouchStart={(e) => { (window as unknown as Record<string, number>)._tsx = e.touches[0].clientX; }}
+                onTouchEnd={(e) => { const dx = (window as unknown as Record<string, number>)._tsx - e.changedTouches[0].clientX; if (Math.abs(dx) > 40) go(dx > 0 ? 1 : -1); }}
+                onKeyDown={(e) => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); go(e.key === 'ArrowRight' ? 1 : -1); } }}
+                tabIndex={0} role="group" aria-roledescription="slide" aria-label={`Photo ${idx + 1} of ${images.length}`}>
+                <img className="property-gallery-main" src={imageUrl(p.id, images[idx].id)} alt={images[idx].alt_text || p.title} draggable={false} />
+                {images.length > 1 && (<>
+                  <button type="button" className="gallery-nav gallery-prev" aria-label="Previous photo" onClick={() => go(-1)}>‹</button>
+                  <button type="button" className="gallery-nav gallery-next" aria-label="Next photo" onClick={() => go(1)}>›</button>
+                  <span className="gallery-counter">{idx + 1} / {images.length}</span>
+                </>)}
               </div>
-            )}
-          </div>
-        )}
+              {images.length > 1 && (
+                <div className="property-gallery-thumbs" ref={(el) => { el?.children[idx]?.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }}>
+                  {images.map((im, i) => (
+                    <button key={im.id} type="button" className={i === idx ? 'active' : ''} aria-label={`Show photo ${i + 1}`} onClick={() => { setActive(i); track('property_gallery_interaction', p.id); }}>
+                      <img src={imageUrl(p.id, im.id)} alt="" loading="lazy" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
         <div className="property-detail-grid">
           <div>
             <h2>Overview</h2>
