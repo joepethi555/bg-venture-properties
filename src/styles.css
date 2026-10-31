@@ -69,7 +69,7 @@ p { margin-bottom: 18px; }
 .topbar-inner { display: flex; justify-content: space-between; align-items: center; padding-block: 8px; gap: 16px; }
 .topbar-inner > span, .topbar-links a { display: inline-flex; align-items: center; gap: 8px; }
 .topbar-inner .icon { width: 14px; height: 14px; color: var(--gold); }
-.topbar-links { display: flex; gap: 22px; }
+.topbar-links { display: flex; gap: 22px; margin-inline-start: auto; }
 .topbar-links a:hover { color: var(--gold); }
 
 .header { position: sticky; top: 0; z-index: 100; background: #fffffff0; backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
