@@ -7,7 +7,7 @@ const CATEGORY_MAP = {
   apartment: 'apartment', flat: 'apartment', penthouse: 'apartment',
   villa: 'villa', townhouse: 'villa',
   office: 'office', 'office space': 'office',
-  warehouse: 'warehouse', 'industrial unit': 'warehouse', factory: 'warehouse', labourcamp: 'warehouse',
+  warehouse: 'warehouse', 'industrial unit': 'warehouse', factory: 'warehouse', labourcamp: 'warehouse', 'labour camp': 'warehouse',
   shop: 'shop', retail: 'shop', 'retail unit': 'shop', 'commercial unit': 'shop', showroom: 'shop', restaurant: 'shop',
   'commercial building': 'commercial-building', 'office building': 'commercial-building', building: 'commercial-building',
   'residential building': 'residential-building', 'apartment building': 'residential-building',

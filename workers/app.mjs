@@ -24,12 +24,19 @@ async function allProperties(env) {
   return [...live, ...samples];
 }
 
-const HEADERS = {
+const API_HEADERS = {
   'content-type': 'application/json; charset=utf-8',
+  'cache-control': 'no-store',
   'x-content-type-options': 'nosniff',
   'x-frame-options': 'DENY',
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
+  'cross-origin-opener-policy': 'same-origin',
+  'permissions-policy': 'camera=(), microphone=(), geolocation=()',
 };
-const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: HEADERS });
+const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: API_HEADERS });
+
+const csp = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: ${ADMIN_API}; connect-src 'self' ${ADMIN_API}; frame-src https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'`;
 
 export default {
   async fetch(request, env) {
@@ -46,7 +53,7 @@ export default {
     }
 
     if (path === '/api/properties') {
-      const list = await allProperties();
+      const list = await allProperties(env);
       const results = search(list, q);
       const page = Math.max(1, Number(q.page) || 1);
       const limit = Math.min(60, Math.max(1, Number(q.limit) || 12));
@@ -105,6 +112,17 @@ export default {
     }
 
     // Everything else: static assets (SPA fallback handled by assets config).
-    return env.ASSETS.fetch(request);
+    const resp = await env.ASSETS.fetch(request);
+    const h = new Headers(resp.headers);
+    h.set('x-content-type-options', 'nosniff');
+    h.set('x-frame-options', 'DENY');
+    h.set('referrer-policy', 'strict-origin-when-cross-origin');
+    h.set('strict-transport-security', 'max-age=31536000; includeSubDomains');
+    h.set('cross-origin-opener-policy', 'same-origin');
+    h.set('permissions-policy', 'camera=(), microphone=(), geolocation=()');
+    h.set('content-security-policy', csp);
+    const isHtml = (h.get('content-type') || '').includes('text/html');
+    h.set('cache-control', isHtml ? 'no-cache' : 'public, max-age=3600');
+    return new Response(resp.body, { status: resp.status, statusText: resp.statusText, headers: h });
   },
 };
