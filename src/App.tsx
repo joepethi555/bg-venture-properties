@@ -839,15 +839,6 @@ function PropertyPage({ id, onBack, onEnquire }: { id: string; onBack: () => voi
                   <span className="gallery-counter">{idx + 1} / {images.length}</span>
                 </>)}
               </div>
-              {images.length > 1 && (
-                <div className="property-gallery-thumbs" ref={(el) => { el?.children[idx]?.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }}>
-                  {images.map((im, i) => (
-                    <button key={im.id} type="button" className={i === idx ? 'active' : ''} aria-label={`Show photo ${i + 1}`} onClick={() => { setActive(i); track('property_gallery_interaction', p.id); }}>
-                      <img src={imageUrl(p.id, im.id)} alt="" loading="lazy" />
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
           );
         })()}
