@@ -7089,14 +7089,14 @@
  {
   "ref": "BGVS-0160",
   "slug": "impressive-5-bedroom-modern-arabic-villa-deira-bgvs-0160",
-  "title": "Impressive 5-bedroom modern Arabic villa, Deira",
+  "title": "Impressive 5-bedroom villa, Golf Place 1, Dubai Hills Estate",
   "purpose": "rent",
   "category": "villa",
   "type_label": "Villa",
   "price": 935000,
   "currency": "AED",
   "rent_period": "yr",
-  "location": "Deira",
+  "location": "Dubai Hills Estate",
   "city": "Dubai",
   "bedrooms": 5,
   "bathrooms": 7,
@@ -7104,7 +7104,7 @@
   "units": null,
   "furnishing": "Partly furnished",
   "parking": 2,
-  "description": "Available for lease: a villa in Deira, Set on a generous plot with landscaped outdoor space.. Ready for immediate occupancy — enquire to arrange a viewing. Contact BG Venture Properties to arrange a viewing or request further details.",
+  "description": "Available for lease: a villa in Dubai Hills Estate, Set on a generous plot with landscaped outdoor space.. Ready for immediate occupancy — enquire to arrange a viewing. Contact BG Venture Properties to arrange a viewing or request further details.",
   "amenities": [
    "Majlis",
    "Private pool",
@@ -7113,14 +7113,10 @@
    "Built-in wardrobes"
   ],
   "images": [
-   "/img/villa/08.jpg",
-   "/img/villa/12.jpg",
-   "/img/villa/13.jpg",
-   "/img/villa/01.jpg",
-   "/img/villa/16.jpg",
-   "/img/villa/15.jpg",
-   "/img/villa/03.jpg",
-   "/img/villa/04.jpg"
+   "/img/villa/golfplace-01.jpg",
+   "/img/villa/golfplace-02.jpg",
+   "/img/villa/golfplace-03.png",
+   "/img/villa/golfplace-04.png"
   ],
   "featured": false,
   "availability": "Available",
@@ -7130,7 +7126,8 @@
    "phone": "+971 4 580 9629",
    "email": "admin@bgventureproperties.ae"
   },
-  "sample": true
+  "sample": true,
+  "building": "Golf Place 1"
  },
  {
   "ref": "BGVS-0161",
