@@ -736,3 +736,6 @@ footer { background: #141618; color: #a9adb2; position: relative; }
 .gallery-counter { position: absolute; bottom: 12px; right: 14px; background: #111416b3; color: #fff; font-size: 11px; letter-spacing: .6px; padding: 5px 12px; border-radius: 20px; backdrop-filter: blur(6px); }
 .property-gallery-thumbs { overflow-x: auto; scrollbar-width: thin; padding-bottom: 4px; }
 @media (max-width: 560px) { .gallery-nav { width: 40px; height: 40px; font-size: 22px; } .gallery-prev { left: 8px; } .gallery-next { right: 8px; } }
+
+.gallery-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: #ffffff3d; border-radius: 0 0 12px 12px; overflow: hidden; }
+.gallery-progress span { display: block; height: 100%; background: var(--gold); transition: width .35s ease; }

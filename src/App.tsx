@@ -837,6 +837,7 @@ function PropertyPage({ id, onBack, onEnquire }: { id: string; onBack: () => voi
                   <button type="button" className="gallery-nav gallery-prev" aria-label="Previous photo" onClick={() => go(-1)}>‹</button>
                   <button type="button" className="gallery-nav gallery-next" aria-label="Next photo" onClick={() => go(1)}>›</button>
                   <span className="gallery-counter">{idx + 1} / {images.length}</span>
+                  <div className="gallery-progress" aria-hidden="true"><span style={{ width: `${((idx + 1) / images.length) * 100}%` }} /></div>
                 </>)}
               </div>
             </div>
