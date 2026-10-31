@@ -2893,22 +2893,22 @@
  {
   "ref": "BGVS-0066",
   "slug": "bright-3-bedroom-apartment-sobha-hartland-greens-sheikh-zayed-road-bgvs-0066",
-  "title": "Bright 3-bedroom apartment, Sobha Hartland Greens, Sheikh Zayed Road",
+  "title": "Bright 3-bedroom apartment, Sobha Hartland Greens, Mohammed Bin Rashid City",
   "purpose": "sale",
   "category": "apartment",
   "type_label": "Apartment",
   "price": 4600000,
   "currency": "AED",
   "rent_period": null,
-  "location": "Sheikh Zayed Road",
-  "city": "Dubai",
+  "location": "Mohammed Bin Rashid City (MBR City)",
+  "city": "Nad Al Sheba 1, Dubai, UAE",
   "bedrooms": 3,
   "bathrooms": 3,
   "size_sqft": 2595,
   "units": null,
   "furnishing": "Unfurnished",
   "parking": 3,
-  "description": "Rare opportunity to acquire this apartment in Sheikh Zayed Road. Featuring floor-to-ceiling windows and quality finishes. An excellent addition to a Dubai property portfolio. Contact BG Venture Properties to arrange a viewing or request further details.",
+  "description": "Rare opportunity to acquire this apartment in Mohammed Bin Rashid City. Featuring floor-to-ceiling windows and quality finishes. An excellent addition to a Dubai property portfolio. Contact BG Venture Properties to arrange a viewing or request further details.",
   "amenities": [
    "Shared pool",
    "Concierge",
@@ -2931,7 +2931,8 @@
    "phone": "+971 4 580 9629",
    "email": "admin@bgventureproperties.ae"
   },
-  "sample": true
+  "sample": true,
+  "building": "Sobha Hartland"
  },
  {
   "ref": "BGVS-0067",
