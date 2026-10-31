@@ -1,0 +1,15 @@
+name = "bg-venture-properties"
+main = "workers/app.mjs"
+compatibility_date = "2025-10-30"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Same-account service binding — Workers can't fetch *.workers.dev over HTTP,
+# so the admin API is called through this binding instead.
+[[services]]
+binding = "ADMIN"
+service = "bgv-admin"
+environment = "production"
